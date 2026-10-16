@@ -32,20 +32,31 @@
 <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </defs></svg>
   <a class="skip" href="#main">Skip to content</a>
-  <header class="site-header">
-    <div class="wrap">
+  <header class="site-header" id="dock">
+    <div class="dock">
       <a class="brand" href="/" aria-label="Bayda home"><img class="brand-logo" src="/assets/wordmark.png" alt="Bayda" width="76" height="24"></a>
       <nav class="nav" aria-label="Main">
         <ul class="nav-links">
-          <li><a href="/#scan">Features</a></li>
+          <li><a href="/#week">Features</a></li>
+          <li><a href="/#progress">Progress</a></li>
           <li><a href="/#privacy">Privacy</a></li>
           <li><a href="/#faq">FAQ</a></li>
           <li><a href="/#contact">Contact</a></li>
         </ul>
-        <!-- APP STORE URL: replace #download with the App Store link at launch -->
-        <a class="btn" href="/#download">Get the app</a>
       </nav>
+      <!-- APP STORE URL: replace #download with the App Store link at launch -->
+      <a class="btn" href="/#download">Get the app</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" hidden><svg width="22" height="22" aria-hidden="true"><use href="#i-menu"/></svg><span class="vh">Menu</span></button>
     </div>
+    <nav class="menu" id="menu" aria-label="Menu" hidden>
+      <ul>
+        <li><a href="/#week">Features</a></li>
+        <li><a href="/#progress">Progress</a></li>
+        <li><a href="/#privacy">Privacy</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main id="main">
@@ -87,5 +98,6 @@
       <p class="fine">&copy; 2026 Baydalabs. Apple, the Apple logo, iPhone and Apple Watch are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.</p>
     </div>
   </footer>
+  <script src="/assets/site.js" defer></script>
 </body>
 </html>

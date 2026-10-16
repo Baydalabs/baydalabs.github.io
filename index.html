@@ -4,18 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#F7F4EE">
+  <meta name="theme-color" content="#FFFFFF">
   <title>Bayda: workouts, runs and meals in one app</title>
-  <meta name="description" content="Bayda is one iPhone app for your workouts, runs and meals. Snap your plate to log calories and macros, log every set, track every run, and see what is working.">
+  <meta name="description" content="Bayda is one iPhone app for your workouts, runs and meals. Log every set, track every run, snap your plate for calories and macros, and see what is working.">
   <link rel="canonical" href="https://baydalabs.com/">
   <link rel="icon" type="image/png" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" as="image" type="image/avif" imagesrcset="/assets/photos/hero-woman-gym-960.avif 960w, /assets/photos/hero-woman-gym-1440.avif 1440w, /assets/photos/hero-woman-gym-1920.avif 1920w" imagesizes="(max-width: 859px) 200vw, 100vw" fetchpriority="high">
+  <link rel="preload" as="image" type="image/avif" media="(min-width: 860px)" imagesrcset="/assets/photos/hero-woman-gym-960.avif 960w, /assets/photos/hero-woman-gym-1440.avif 1440w, /assets/photos/hero-woman-gym-1920.avif 1920w" imagesizes="100vw" fetchpriority="high">
+  <link rel="preload" as="image" type="image/avif" media="(max-width: 859.98px)" imagesrcset="/assets/photos/hero-woman-gym-tall-640.avif 640w, /assets/photos/hero-woman-gym-tall-960.avif 960w, /assets/photos/hero-woman-gym-tall-1240.avif 1240w" imagesizes="100vw" fetchpriority="high">
   <link rel="stylesheet" href="/assets/site.css">
+  <script>document.documentElement.className = 'js' + (matchMedia('(prefers-reduced-motion: reduce)').matches ? '' : ' motion');</script>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Bayda">
   <meta property="og:title" content="Bayda: workouts, runs and meals in one app">
-  <meta property="og:description" content="Snap your plate to log calories and macros, log every set, track every run, and see what is working.">
+  <meta property="og:description" content="Log every set, track every run, snap your plate for calories and macros, and see what is working.">
   <meta property="og:url" content="https://baydalabs.com/">
   <meta property="og:image" content="https://baydalabs.com/assets/og.jpg">
   <meta property="og:image:width" content="1200">
@@ -24,7 +26,7 @@
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Bayda: workouts, runs and meals in one app">
-  <meta name="twitter:description" content="Snap your plate to log calories and macros, log every set, track every run, and see what is working.">
+  <meta name="twitter:description" content="Log every set, track every run, snap your plate for calories and macros, and see what is working.">
   <meta name="twitter:image" content="https://baydalabs.com/assets/og.jpg">
   <meta name="twitter:image:alt" content="The Bayda logo and “Workouts, runs and meals. One app.” beside an iPhone showing Bayda’s Home">
   <script type="application/ld+json">
@@ -57,147 +59,412 @@
 }
   </script>
 </head>
-<body>
+<body class="home">
   <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><defs>
 <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-run" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="14.5" cy="4.5" r="1.8"/><path d="M8 21l2.5-6 3 1.5L15 21M10.5 15l-.5-5 4-1 2 3.5 3 .5M10 10L7 12"/></g></symbol>
+<symbol id="i-lift" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></g></symbol>
+<symbol id="i-fork" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 2 2v9M11 3v7a2 2 0 0 1-2 2M9 3v6M17 21V3c-2 1.5-3 4-3 7v3h3"/></g></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M9.5 17h5"/></g></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 5.5h3"/></g></symbol>
+<symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7.5 18.5h9.5a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6-1.2A4.6 4.6 0 0 0 7.5 18.5z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+<symbol id="i-people" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.6-3.4 3-5.5 6-5.5s5.4 2.1 6 5.5"/><path d="M15.5 4.9a3.2 3.2 0 0 1 0 6.2M17.5 14.8c1.9.7 3.1 2.6 3.5 5.2"/></g></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M3.5 8.5a2 2 0 0 1 2-2h2l1.5-2h6l1.5 2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2v-9z"/><circle cx="12" cy="12.5" r="3.5"/></g></symbol>
+<symbol id="i-block" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></g></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c-3.9 0-6.5-2.6-6.5-6.2 0-3.3 2.4-5.2 3.6-8.3.3 1.7 1.2 2.9 2.4 3.4C11.3 6.6 12.6 4.1 15 3c-.4 3 1 4.8 2.2 6.6.8 1.2 1.3 2.6 1.3 4.2 0 4-2.6 7.2-6.5 7.2z" fill="currentColor"/></symbol>
 </defs></svg>
   <a class="skip" href="#main">Skip to content</a>
-  <header class="site-header">
-    <div class="wrap">
+
+  <header class="site-header" id="dock">
+    <div class="dock">
       <a class="brand" href="/" aria-label="Bayda home"><img class="brand-logo" src="/assets/wordmark.png" alt="Bayda" width="76" height="24"></a>
       <nav class="nav" aria-label="Main">
         <ul class="nav-links">
-          <li><a href="/#scan">Features</a></li>
+          <li><a href="/#week">Features</a></li>
+          <li><a href="/#progress">Progress</a></li>
           <li><a href="/#privacy">Privacy</a></li>
           <li><a href="/#faq">FAQ</a></li>
           <li><a href="/#contact">Contact</a></li>
         </ul>
-        <!-- APP STORE URL: replace #download with the App Store link at launch -->
-        <a class="btn" href="/#download">Get the app</a>
       </nav>
+      <!-- APP STORE URL: replace #download with the App Store link at launch -->
+      <a class="btn" href="/#download">Get the app</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" hidden><svg width="22" height="22" aria-hidden="true"><use href="#i-menu"/></svg><span class="vh">Menu</span></button>
     </div>
+    <nav class="menu" id="menu" aria-label="Menu" hidden>
+      <ul>
+        <li><a href="/#week">Features</a></li>
+        <li><a href="/#progress">Progress</a></li>
+        <li><a href="/#privacy">Privacy</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main id="main">
-    <section class="scene hero" aria-labelledby="hero-h">
-      <div class="scene-photo"><picture class="scene-img"><source type="image/avif" srcset="/assets/photos/hero-woman-gym-960.avif 960w, /assets/photos/hero-woman-gym-1440.avif 1440w, /assets/photos/hero-woman-gym-1920.avif 1920w" sizes="(max-width: 859px) 200vw, 100vw"><source type="image/webp" srcset="/assets/photos/hero-woman-gym-960.webp 960w, /assets/photos/hero-woman-gym-1440.webp 1440w, /assets/photos/hero-woman-gym-1920.webp 1920w" sizes="(max-width: 859px) 200vw, 100vw"><img src="/assets/photos/hero-woman-gym-1440.jpg" width="1440" height="946" alt="A woman in a bright, plant-filled room looking at her iPhone." fetchpriority="high" decoding="async"></picture></div>
-      <div class="hero-cards" aria-hidden="true">
-        <div class="ui-card"><span class="ui-k">Fuel</span><strong>831</strong><span class="ui-s">calories to go</span></div>
-        <div class="ui-card ui-row"><span class="ui-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14.5" cy="4.5" r="1.8"/><path d="M8 21l2.5-6 3 1.5L15 21M10.5 15l-.5-5 4-1 2 3.5 3 .5M10 10L7 12"/></svg></span><span><span class="ui-k">Move</span><strong>Morning run</strong><span class="ui-s">7.4 km · 41 min</span></span></div>
-      </div>
-      <div class="wrap hero-copy">
-        <h1 id="hero-h">Workouts, runs and meals. One app.</h1>
-        <p class="lead">Log your sets, runs and plates, and see what is working.</p>
-        <div class="cta-row">
-          <!-- APP STORE URL: replace #download with the App Store link at launch -->
-          <a class="badge" id="hero-badge" href="#download"><img src="/assets/app-store-badge.svg" width="120" height="40" alt="Download on the App Store"></a>
-          <p class="caption">Now in testing. Coming soon to the App Store.</p>
+
+    <!-- 1. Hero: the photograph first. Scrolling blurs it and a real Bayda phone rises into place. -->
+    <section class="hero" id="top" data-scene="pin" aria-labelledby="hero-h">
+      <div class="hero-stage">
+        <div class="hero-frame">
+          <picture class="hero-photo">
+            <source media="(max-width: 859.98px)" type="image/avif" srcset="/assets/photos/hero-woman-gym-tall-640.avif 640w, /assets/photos/hero-woman-gym-tall-960.avif 960w, /assets/photos/hero-woman-gym-tall-1240.avif 1240w" sizes="100vw">
+            <source media="(max-width: 859.98px)" type="image/webp" srcset="/assets/photos/hero-woman-gym-tall-640.webp 640w, /assets/photos/hero-woman-gym-tall-960.webp 960w, /assets/photos/hero-woman-gym-tall-1240.webp 1240w" sizes="100vw">
+            <source type="image/avif" srcset="/assets/photos/hero-woman-gym-960.avif 960w, /assets/photos/hero-woman-gym-1440.avif 1440w, /assets/photos/hero-woman-gym-1920.avif 1920w" sizes="100vw">
+            <source type="image/webp" srcset="/assets/photos/hero-woman-gym-960.webp 960w, /assets/photos/hero-woman-gym-1440.webp 1440w, /assets/photos/hero-woman-gym-1920.webp 1920w" sizes="100vw">
+            <img src="/assets/photos/hero-woman-gym-1440.jpg" width="1440" height="946" alt="A woman in a bright, plant-filled studio checking Bayda on her iPhone between sets." fetchpriority="high" decoding="async">
+          </picture>
+          <picture class="hero-blur" aria-hidden="true">
+            <source media="(max-width: 859.98px)" type="image/webp" srcset="/assets/photos/hero-woman-gym-tall-blur.webp">
+            <source type="image/webp" srcset="/assets/photos/hero-woman-gym-blur.webp">
+            <img src="/assets/photos/hero-woman-gym-blur.jpg" width="720" height="473" alt="" decoding="async">
+          </picture>
+          <div class="hero-copy">
+            <h1 id="hero-h">Your whole fitness week. <span class="nw">One app.</span></h1>
+            <p class="lead">Log your sets, runs and plates in Bayda, and see what is working.</p>
+            <div class="cta-row">
+              <!-- APP STORE URL: replace #download with the App Store link at launch -->
+              <a class="badge" id="hero-badge" href="#download"><img src="/assets/app-store-badge.svg" width="120" height="40" alt="Download on the App Store"></a>
+              <p class="caption">Now in testing. Coming soon to the App Store.</p>
+            </div>
+            <p class="trust">Made in Belgium<span aria-hidden="true"> · </span>Stored in the EU<span aria-hidden="true"> · </span>No ads</p>
+          </div>
         </div>
-        <p class="trust">Made in Belgium<span aria-hidden="true"> · </span>Stored in the EU<span aria-hidden="true"> · </span>No ads</p>
+        <div class="reveal" aria-labelledby="reveal-h">
+            <div class="reveal-copy">
+              <h2 id="reveal-h">Train, Move and Fuel, side by side.</h2>
+              <p>Your workouts, runs and meals in one place, so your week finally adds up.</p>
+            </div>
+            <div class="reveal-phone">
+              <div class="phone"><picture><source type="image/avif" srcset="/assets/screens/home.avif"><source type="image/webp" srcset="/assets/screens/home.webp"><img src="/assets/screens/home.png" width="720" height="1564" alt="Bayda’s Home: this week’s sessions above your Push Day workout, with its time, volume, sets and three records." decoding="async"></picture></div>
+              <div class="ui-card rc rc-fuel" aria-hidden="true"><span class="ui-ic fuel"><svg width="18" height="18"><use href="#i-flame"/></svg></span><span><span class="ui-k">Fuel</span><strong>831</strong><span class="ui-s">calories to go</span></span></div>
+              <div class="ui-card rc rc-move" aria-hidden="true"><span class="ui-ic move"><svg width="18" height="18"><use href="#i-run"/></svg></span><span><span class="ui-k">Morning run</span><strong>5.24 km</strong><span class="ui-s">5:46 /km · 30:12</span></span></div>
+              <div class="ui-card rc rc-train" aria-hidden="true"><span class="ui-ic rec"><svg width="18" height="18"><use href="#i-trophy"/></svg></span><span><span class="ui-k">Push Day</span><strong>3 records</strong><span class="ui-s">7,420 kg · 18 sets</span></span></div>
+            </div>
+        </div>
       </div>
     </section>
 
-    <section class="scene feat l" id="scan" aria-labelledby="scan-h">
-      <div class="scene-photo"><picture class=""><source type="image/avif" srcset="/assets/photos/scan-plate-640.avif 640w, /assets/photos/scan-plate-960.avif 960w, /assets/photos/scan-plate-1280.avif 1280w" sizes="(max-width: 859px) 100vw, 62vw"><source type="image/webp" srcset="/assets/photos/scan-plate-640.webp 640w, /assets/photos/scan-plate-960.webp 960w, /assets/photos/scan-plate-1280.webp 1280w" sizes="(max-width: 859px) 100vw, 62vw"><img src="/assets/photos/scan-plate-960.jpg" width="960" height="1192" alt="A hand holding an iPhone over a plate of spaghetti bolognese, showing Bayda’s food scan with each food and its calories." loading="lazy" decoding="async"></picture></div>
-      <div class="wrap feat-grid">
-        <div class="feat-phone"><div class="phone "><picture><source type="image/avif" srcset="/assets/screens/scan-portion.avif"><source type="image/webp" srcset="/assets/screens/scan-portion.webp"><img src="/assets/screens/scan-portion.png" width="720" height="1564" alt="Changing a portion in Bayda: spaghetti at 220 grams, 288 calories, with fat, carbs and protein." loading="lazy" decoding="async"></picture></div></div>
-        <div class="copy">
-          <h2 id="scan-h">Snap your plate. Get the numbers.</h2>
-          <p class="lead">One photo and Bayda lists each food with its portion, calories and macros.</p>
-          <ul class="ticks"><li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Every portion is yours to change</span></li><li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Packaged food? Scan the barcode or label</span></li><li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Always marked as an estimate</span></li></ul>
+    <!-- 2. Your week: four colour fields, one per part of the app -->
+    <section class="sec week" id="week" aria-labelledby="week-h">
+      <div class="wrap">
+        <div class="sec-head" data-reveal>
+          <h2 id="week-h">Everything you do, in one week.</h2>
+          <p class="lead">Strength, cardio and food live side by side in Bayda, so you can see how each part of your week feeds the rest.</p>
+        </div>
+        <div class="bento">
+          <article class="tile t-train" data-scene="view">
+            <div class="tile-copy"><h3><svg width="20" height="20" aria-hidden="true"><use href="#i-lift"/></svg>Train</h3><p>Routines, every set, and the weight you lifted last time.</p></div>
+            <div class="tile-phone"><div class="phone"><picture><source type="image/avif" srcset="/assets/screens/train.avif"><source type="image/webp" srcset="/assets/screens/train.webp"><img src="/assets/screens/train.png" width="720" height="1564" alt="Bayda’s Train tab: routines to start, 2 of 3 sessions this week and a 4 day streak." loading="lazy" decoding="async"></picture></div></div>
+          </article>
+          <article class="tile t-move" data-scene="view">
+            <div class="tile-copy"><h3><svg width="20" height="20" aria-hidden="true"><use href="#i-run"/></svg>Move</h3><p>Runs, walks and rides, with your route, pace and splits.</p></div>
+            <div class="tile-phone"><div class="phone"><picture><source type="image/avif" srcset="/assets/screens/run.avif"><source type="image/webp" srcset="/assets/screens/run.webp"><img src="/assets/screens/run.png" width="720" height="1564" alt="A morning run in Bayda: the route on a map with distance, moving time and pace." loading="lazy" decoding="async"></picture></div></div>
+          </article>
+          <article class="tile t-fuel" data-scene="view">
+            <div class="tile-copy"><h3><svg width="20" height="20" aria-hidden="true"><use href="#i-fork"/></svg>Fuel</h3><p>Calories and macros from a photo, a barcode or a search.</p></div>
+            <div class="tile-phone"><div class="phone"><picture><source type="image/avif" srcset="/assets/screens/fuel.avif"><source type="image/webp" srcset="/assets/screens/fuel.webp"><img src="/assets/screens/fuel.png" width="720" height="1564" alt="Bayda’s Fuel tab: 831 calories to go, with protein, carbs and fat rings and today’s activity." loading="lazy" decoding="async"></picture></div></div>
+          </article>
+          <article class="tile t-prog" data-scene="view">
+            <div class="tile-copy"><h3><svg width="20" height="20" aria-hidden="true"><use href="#i-trophy"/></svg>Progress</h3><p>The muscles you trained, your records and your trends.</p></div>
+            <div class="tile-phone"><div class="phone"><picture><source type="image/avif" srcset="/assets/screens/progress.avif"><source type="image/webp" srcset="/assets/screens/progress.webp"><img src="/assets/screens/progress.png" width="720" height="1564" alt="Bayda’s Progress page: a front and back body map with the trained muscles in orange." loading="lazy" decoding="async"></picture></div></div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="scene feat r" id="train" aria-labelledby="train-h">
-      <div class="scene-photo"><picture class=""><source type="image/avif" srcset="/assets/photos/train-press-640.avif 640w, /assets/photos/train-press-960.avif 960w, /assets/photos/train-press-1280.avif 1280w" sizes="(max-width: 859px) 100vw, 62vw"><source type="image/webp" srcset="/assets/photos/train-press-640.webp 640w, /assets/photos/train-press-960.webp 960w, /assets/photos/train-press-1280.webp 1280w" sizes="(max-width: 859px) 100vw, 62vw"><img src="/assets/photos/train-press-960.jpg" width="960" height="1192" alt="A man doing a seated dumbbell press in a bright gym." loading="lazy" decoding="async"></picture></div>
-      <div class="wrap feat-grid">
-        <div class="feat-phone"><div class="phone "><picture><source type="image/avif" srcset="/assets/screens/workout.avif"><source type="image/webp" srcset="/assets/screens/workout.webp"><img src="/assets/screens/workout.png" width="720" height="1564" alt="Bayda’s workout player: sets with the weight and reps from last time, ticked off in green, and a rest timer running." loading="lazy" decoding="async"></picture></div></div>
-        <div class="copy">
+    <!-- 3. Train: a set gets ticked, a record lands -->
+    <section class="sec train" id="train" aria-labelledby="train-h">
+      <div class="wrap split">
+        <div class="copy" data-reveal>
+          <p class="kicker k-train">Train</p>
           <h2 id="train-h">Every set logged. Every record noticed.</h2>
           <p class="lead">Bayda shows what you lifted last time, times your rest, and marks a new record for you.</p>
-          <ul class="ticks"><li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>The rest timer follows you to the lock screen</span></li><li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>A weekly goal and a day streak</span></li></ul>
+          <ul class="ticks">
+            <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>The rest timer follows you to the lock screen</span></li>
+            <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>Build routines, or start an empty workout</span></li>
+            <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>A weekly goal and a day streak</span></li>
+          </ul>
+        </div>
+        <div class="train-stage" data-reveal>
+          <figure class="photo train-photo"><picture><source type="image/avif" srcset="/assets/photos/train-press-640.avif 640w, /assets/photos/train-press-960.avif 960w, /assets/photos/train-press-1280.avif 1280w" sizes="(max-width: 859px) 92vw, 440px"><source type="image/webp" srcset="/assets/photos/train-press-640.webp 640w, /assets/photos/train-press-960.webp 960w, /assets/photos/train-press-1280.webp 1280w" sizes="(max-width: 859px) 92vw, 440px"><img src="/assets/photos/train-press-960.jpg" width="960" height="1192" alt="A man doing a seated dumbbell press in a bright gym." loading="lazy" decoding="async"></picture></figure>
+          <div class="train-phone"><div class="phone"><picture><source type="image/avif" srcset="/assets/screens/workout.avif"><source type="image/webp" srcset="/assets/screens/workout.webp"><img src="/assets/screens/workout.png" width="720" height="1564" alt="Bayda’s workout player: each set beside the weight and reps from last time, ticked off in green, with the rest timer running." loading="lazy" decoding="async"></picture></div></div>
+          <div class="set-card" aria-hidden="true">
+            <p class="set-ex">Incline Dumbbell Press</p>
+            <div class="set-head"><span>Set</span><span>Previous</span><span>kg</span><span>Reps</span><span></span></div>
+            <div class="set-row done"><span>2</span><span>24 kg × 8</span><span>24</span><span>8</span><span class="tick"><svg width="14" height="14"><use href="#i-check"/></svg></span></div>
+            <div class="set-row live"><span>3</span><span>24 kg × 8</span><span>26</span><span>8</span><span class="tick"><svg width="14" height="14"><use href="#i-check"/></svg></span></div>
+          </div>
+          <div class="pr-chip" aria-hidden="true"><span class="ui-ic rec"><svg width="16" height="16"><use href="#i-trophy"/></svg></span><span><strong>New record</strong><span>26 kg × 8</span></span></div>
         </div>
       </div>
     </section>
 
-    <section class="scene feat l" id="move" aria-labelledby="move-h">
-      <div class="scene-photo"><picture class=""><source type="image/avif" srcset="/assets/photos/move-riverside-640.avif 640w, /assets/photos/move-riverside-960.avif 960w, /assets/photos/move-riverside-1280.avif 1280w" sizes="(max-width: 859px) 100vw, 62vw"><source type="image/webp" srcset="/assets/photos/move-riverside-640.webp 640w, /assets/photos/move-riverside-960.webp 960w, /assets/photos/move-riverside-1280.webp 1280w" sizes="(max-width: 859px) 100vw, 62vw"><img src="/assets/photos/move-riverside-960.jpg" width="960" height="1155" alt="Three runners on a riverside path at sunset." loading="lazy" decoding="async"></picture></div>
-      <div class="wrap feat-grid">
-        <div class="feat-phone"><div class="phone "><picture><source type="image/avif" srcset="/assets/screens/run.avif"><source type="image/webp" srcset="/assets/screens/run.webp"><img src="/assets/screens/run.png" width="720" height="1564" alt="A run in Bayda: the route on a map of Amsterdam, with distance, moving time, pace and heart rate." loading="lazy" decoding="async"></picture></div></div>
-        <div class="copy">
-          <h2 id="move-h">Runs, walks and rides, kilometre by kilometre.</h2>
-          <p class="lead">Press start and go. Route, pace and splits from GPS, plus heart rate with an Apple Watch.</p>
-          <ul class="ticks"><li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Bring workouts in from Apple Health</span></li><li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Bring your history from Strava</span></li></ul>
+    <!-- 4. Move: the route draws as you scroll -->
+    <section class="sec move" id="move" aria-labelledby="move-h">
+      <div class="move-scene" data-scene="pin">
+        <div class="move-stage">
+          <div class="wrap move-grid">
+            <div class="copy">
+              <p class="kicker k-move">Move</p>
+              <h2 id="move-h">Runs, walks and rides, kilometre by kilometre.</h2>
+              <p class="lead">Press start and go. Route, pace and splits from GPS, plus heart rate with an Apple Watch.</p>
+              <ul class="ticks">
+                <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>Bring workouts in from Apple Health</span></li>
+                <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>Bring your history from Strava</span></li>
+              </ul>
+            </div>
+            <div class="map-card">
+              <svg class="map" viewBox="0 0 600 600" role="img" aria-labelledby="map-t">
+                <title id="map-t">An illustrated map: a violet running route loops through a park, crosses a river and returns, with kilometre markers along it.</title>
+                <defs><pattern id="blocks" width="34" height="30" patternUnits="userSpaceOnUse" patternTransform="rotate(-8)"><rect x="3" y="3" width="28" height="24" rx="3" fill="#E6E1D8"/><rect x="3" y="3" width="13" height="11" rx="2" fill="#E1DBD1"/></pattern></defs>
+                <rect width="600" height="600" fill="#F1EDE6"/>
+                <rect width="600" height="600" fill="url(#blocks)"/>
+                <path d="M40 300 C 120 250, 230 250, 330 290 C 380 312, 420 360, 410 420 C 400 480, 330 520, 250 520 C 160 520, 80 480, 50 420 C 30 380, 20 330, 40 300 Z" fill="#CFE6C1"/>
+                <path d="M440 70 C 500 70, 560 110, 570 170 C 578 220, 540 250, 500 240 C 450 228, 420 170, 425 120 Z" fill="#CFE6C1"/>
+                <path d="M470 430 C 520 420, 580 440, 590 500 C 596 560, 540 590, 500 580 C 460 570, 445 470, 470 430 Z" fill="#D7EBCB"/>
+                <g fill="#BFDDB0"><circle cx="150" cy="420" r="9"/><circle cx="230" cy="470" r="7"/><circle cx="300" cy="400" r="8"/><circle cx="120" cy="360" r="6"/><circle cx="360" cy="460" r="6"/><circle cx="500" cy="150" r="8"/><circle cx="530" cy="510" r="7"/></g>
+                <path d="M200 380 C 240 360, 290 370, 320 400 C 300 430, 240 430, 200 380 Z" fill="#B9DAF3"/>
+                <path d="M-20 196 C 90 160, 190 236, 300 200 S 470 120, 620 156" fill="none" stroke="#B9DAF3" stroke-width="42" stroke-linecap="round"/>
+                <g fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" opacity=".95">
+                  <path d="M0 110 C 160 120, 330 90, 600 100"/>
+                  <path d="M0 270 C 150 255, 400 265, 600 280"/>
+                  <path d="M180 0 C 175 120, 190 280, 170 600"/>
+                  <path d="M380 0 C 400 160, 380 360, 420 600"/>
+                  <path d="M0 560 C 200 545, 400 560, 600 540"/>
+                  <path d="M520 0 C 515 200, 540 420, 520 600" stroke-width="6"/>
+                </g>
+                <g fill="none" stroke="#FFFFFF" stroke-width="4" opacity=".8">
+                  <path d="M0 40h600M0 340h40M440 340h160M0 450h40M70 0v100M290 0v80M470 360v240M90 600v-60M300 600v-30"/>
+                </g>
+                <path d="M210 214 l26 -8 M345 196 l24 -10" stroke="#D9D3C8" stroke-width="12" stroke-linecap="round"/>
+                <path class="route-case" d="M118 470 C 98 420, 110 360, 160 330 S 250 300, 300 318 S 360 250, 352 196 S 380 120, 440 110 S 540 120, 548 176 S 520 262, 470 300 S 426 380, 410 430 S 360 506, 290 508 S 170 506, 132 488" fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+                <path class="route" d="M118 470 C 98 420, 110 360, 160 330 S 250 300, 300 318 S 360 250, 352 196 S 380 120, 440 110 S 540 120, 548 176 S 520 262, 470 300 S 426 380, 410 430 S 360 506, 290 508 S 170 506, 132 488" fill="none" stroke="#5850D0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+                <g class="km-marks"></g>
+                <circle class="route-start" cx="118" cy="470" r="9" fill="#FFFFFF" stroke="#1FA971" stroke-width="5"/>
+                <g class="route-head"><circle r="15" fill="#5850D0" opacity=".18"/><circle r="8" fill="#FFFFFF"/><circle r="5.5" fill="#5850D0"/></g>
+              </svg>
+              <p class="map-note">Map illustration</p>
+              <ul class="run-stats">
+                <li class="stat" style="--at:.3"><span>Distance</span><strong>5.24 km</strong></li>
+                <li class="stat" style="--at:.48"><span>Moving time</span><strong>30:12</strong></li>
+                <li class="stat" style="--at:.66"><span>Avg pace</span><strong>5:46 /km</strong></li>
+                <li class="stat" style="--at:.84"><span>Avg heart rate</span><strong>154 bpm</strong></li>
+              </ul>
+            </div>
+            <figure class="photo move-photo"><picture><source type="image/avif" srcset="/assets/photos/move-riverside-640.avif 640w, /assets/photos/move-riverside-960.avif 960w, /assets/photos/move-riverside-1280.avif 1280w" sizes="(max-width: 859px) 60vw, 300px"><source type="image/webp" srcset="/assets/photos/move-riverside-640.webp 640w, /assets/photos/move-riverside-960.webp 960w, /assets/photos/move-riverside-1280.webp 1280w" sizes="(max-width: 859px) 60vw, 300px"><img src="/assets/photos/move-riverside-960.jpg" width="960" height="1155" alt="Three runners on a riverside path at sunset." loading="lazy" decoding="async"></picture></figure>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="scene feat r" id="fuel" aria-labelledby="fuel-h">
-      <div class="scene-photo"><picture class=""><source type="image/avif" srcset="/assets/photos/fuel-kitchen-640.avif 640w, /assets/photos/fuel-kitchen-960.avif 960w, /assets/photos/fuel-kitchen-1280.avif 1280w" sizes="(max-width: 859px) 100vw, 62vw"><source type="image/webp" srcset="/assets/photos/fuel-kitchen-640.webp 640w, /assets/photos/fuel-kitchen-960.webp 960w, /assets/photos/fuel-kitchen-1280.webp 1280w" sizes="(max-width: 859px) 100vw, 62vw"><img src="/assets/photos/fuel-kitchen-960.jpg" width="960" height="1324" alt="A woman adding toppings to a bowl of food in a bright kitchen." loading="lazy" decoding="async"></picture></div>
-      <div class="wrap feat-grid">
-        <div class="feat-phone"><div class="phone "><picture><source type="image/avif" srcset="/assets/screens/fuel.avif"><source type="image/webp" srcset="/assets/screens/fuel.webp"><img src="/assets/screens/fuel.png" width="720" height="1564" alt="Bayda’s Fuel tab: 831 calories to go, protein, carbs and fat rings, and today’s activity." loading="lazy" decoding="async"></picture></div></div>
-        <div class="copy">
-          <h2 id="fuel-h">Know what is left for today.</h2>
-          <p class="lead">Set a goal and every meal counts down from there. Your workouts can add back what they burned.</p>
-          <ul class="ticks"><li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Calories, protein, carbs and fat</span></li><li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Weigh-ins and a goal weight on one chart</span></li></ul>
-        </div>
-      </div>
-    </section>
-
-
-    <section class="mid" aria-label="Get the app">
+    <!-- 5. Fuel: the plate photo, then the day's numbers count down -->
+    <section class="sec fuel" id="fuel" aria-labelledby="fuel-h">
       <div class="wrap">
-        <p class="mid-line">Ready to try it?</p>
-        <div class="cta-row center">
-          <!-- APP STORE URL: wrap this badge in <a href="App Store URL"> at launch, as in the hero -->
-          <span class="badge"><img src="/assets/app-store-badge.svg" width="120" height="40" alt="Download on the App Store" loading="lazy" decoding="async"></span>
-          <p class="caption">Free for testers. Coming soon to the App Store.</p>
+        <div class="fuel-panel">
+          <figure class="photo fuel-photo" data-reveal><picture><source type="image/avif" srcset="/assets/photos/scan-plate-640.avif 640w, /assets/photos/scan-plate-960.avif 960w, /assets/photos/scan-plate-1280.avif 1280w" sizes="(max-width: 859px) 92vw, 520px"><source type="image/webp" srcset="/assets/photos/scan-plate-640.webp 640w, /assets/photos/scan-plate-960.webp 960w, /assets/photos/scan-plate-1280.webp 1280w" sizes="(max-width: 859px) 92vw, 520px"><img src="/assets/photos/scan-plate-960.jpg" width="960" height="1192" alt="A hand holding an iPhone over a plate of spaghetti bolognese, showing Bayda’s food scan listing each food with its calories." loading="lazy" decoding="async"></picture></figure>
+          <div class="fuel-side">
+            <div class="copy" data-reveal>
+              <p class="kicker k-fuel">Fuel</p>
+              <h2 id="fuel-h">Snap your plate. Know what is left.</h2>
+              <p class="lead">One photo and Bayda lists each food with its portion, calories and macros. Set a goal, and every meal counts down from there.</p>
+              <ul class="ticks">
+                <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>Always marked as an estimate, and every portion is yours to change</span></li>
+                <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>Packaged food? Scan the barcode or the label</span></li>
+                <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>Your workouts can add back what they burned</span></li>
+              </ul>
+            </div>
+            <div class="target-card" data-reveal aria-label="Daily targets: 831 calories to go. Protein 7 grams over, carbs 28 grams left, fat 12 grams left.">
+              <div class="tc-top">
+                <div>
+                  <p class="tc-k">Daily targets</p>
+                  <p class="tc-big"><span data-count="831" data-from="2524">831</span></p>
+                  <p class="tc-s">Calories to go</p>
+                  <p class="tc-burn"><svg width="13" height="13" aria-hidden="true"><use href="#i-flame"/></svg>+874</p>
+                </div>
+                <svg class="ring big" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="40" class="ring-track"/><circle cx="50" cy="50" r="40" class="ring-val" pathLength="1" style="--v:.67;--c:#5850D0"/><use href="#i-flame" x="38" y="38" width="24" height="24" class="ring-ic"/></svg>
+              </div>
+              <div class="tc-macros">
+                <div><p><strong>7g</strong><span>Protein over</span></p><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="38" class="ring-track"/><circle cx="50" cy="50" r="38" class="ring-val" pathLength="1" style="--v:1;--c:#E85C65"/></svg></div>
+                <div><p><strong>28g</strong><span>Carbs left</span></p><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="38" class="ring-track"/><circle cx="50" cy="50" r="38" class="ring-val" pathLength="1" style="--v:.86;--c:#E8A33D"/></svg></div>
+                <div><p><strong>12g</strong><span>Fat left</span></p><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="38" class="ring-track"/><circle cx="50" cy="50" r="38" class="ring-val" pathLength="1" style="--v:.82;--c:#1FA971"/></svg></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- 6. Progress: four of the app's own charts, staged one at a time -->
     <section class="sec progress" id="progress" aria-labelledby="progress-h">
       <div class="wrap">
-        <div class="center-head">
+        <div class="sec-head" data-reveal>
+          <p class="kicker k-prog">Progress</p>
           <h2 id="progress-h">See what is working.</h2>
           <p class="lead">Training, runs, meals and weight live in one app, so the trends are easy to see.</p>
         </div>
-        <div class="shots-scroll" role="region" aria-label="Progress screens" tabindex="0">
-          <ul class="shots">
-            <li><div class="phone "><picture><source type="image/avif" srcset="/assets/screens/progress.avif"><source type="image/webp" srcset="/assets/screens/progress.webp"><img src="/assets/screens/progress.png" width="720" height="1564" alt="Bayda’s Progress page: a body map showing how many sets each muscle group got." loading="lazy" decoding="async"></picture></div><p>Which muscles you trained</p></li>
-            <li><div class="phone "><picture><source type="image/avif" srcset="/assets/screens/run-stats.avif"><source type="image/webp" srcset="/assets/screens/run-stats.webp"><img src="/assets/screens/run-stats.png" width="720" height="1564" alt="Bayda’s run analysis: kilometre splits with pace, elevation and heart rate, and a pace chart." loading="lazy" decoding="async"></picture></div><p>How every kilometre went</p></li>
-            <li><div class="phone "><picture><source type="image/avif" srcset="/assets/screens/body.avif"><source type="image/webp" srcset="/assets/screens/body.webp"><img src="/assets/screens/body.png" width="720" height="1564" alt="Bayda’s weight chart: weigh-ins over three months with a goal line at 82 kilograms." loading="lazy" decoding="async"></picture></div><p>Where your weight is heading</p></li>
-          </ul>
+        <div class="prog">
+          <ol class="prog-steps">
+            <li class="pstep" data-step="0">
+              <h3>Which muscles you trained</h3>
+              <p>A front and back body map shows how many sets each muscle group got this week.</p>
+              <div class="pcard pc-muscles">
+                <p class="pc-t">Muscle distribution</p>
+                <picture><source type="image/avif" srcset="/assets/screens/crop-muscles.avif"><source type="image/webp" srcset="/assets/screens/crop-muscles.webp"><img src="/assets/screens/crop-muscles.png" width="720" height="553" alt="Bayda’s muscle map, front and back, with chest, shoulders, arms, back and legs shaded orange." loading="lazy" decoding="async"></picture>
+                <ul class="pc-legend"><li><strong>14</strong> Chest sets</li><li><strong>11</strong> Back sets</li><li><strong>6</strong> Shoulder sets</li></ul>
+              </div>
+            </li>
+            <li class="pstep" data-step="1">
+              <h3>How often you show up</h3>
+              <p>Training consistency counts your sessions week by week, with this week in orange.</p>
+              <div class="pcard pc-cons">
+                <p class="pc-t">Training consistency</p>
+                <p class="pc-big"><strong>4.9</strong> sessions / week</p>
+                <svg class="bars" viewBox="0 0 320 150" role="img" aria-label="Sessions per week over the last 8 weeks: 4, 2, 3, 6, 5, 6, 8, and 1 so far this week.">
+                  <g class="grid"><path d="M0 130H320M0 92H320M0 54H320M0 16H320"/></g>
+                  <g class="cols">
+                    <rect x="8" y="73.0" width="28" height="57.0" rx="5" style="--i:0"/><rect x="48" y="101.5" width="28" height="28.5" rx="5" style="--i:1"/><rect x="88" y="87.25" width="28" height="42.75" rx="5" style="--i:2"/><rect x="128" y="44.5" width="28" height="85.5" rx="5" style="--i:3"/><rect x="168" y="58.75" width="28" height="71.25" rx="5" style="--i:4"/><rect x="208" y="44.5" width="28" height="85.5" rx="5" style="--i:5"/><rect x="248" y="16" width="28" height="114" rx="5" style="--i:6"/><rect x="288" y="115.75" width="28" height="14.25" rx="5" class="now" style="--i:7"/>
+                  </g>
+                </svg>
+                <p class="pc-foot"><span>Last 8 weeks</span><span>This week: 1 session</span></p>
+              </div>
+            </li>
+            <li class="pstep" data-step="2">
+              <h3>Where your training goes</h3>
+              <p>Training distribution compares the sets you logged this period with the one before.</p>
+              <div class="pcard pc-radar">
+                <p class="pc-t">Training distribution</p>
+                <svg class="radar" viewBox="-130 -118 260 236" role="img" aria-label="A radar chart of logged sets across back, chest, core, shoulders, arms and legs, this period against the previous period.">
+                  <g class="web"><polygon points="-50,-86.6 50,-86.6 100,0 50,86.6 -50,86.6 -100,0"/><polygon points="-33.3,-57.7 33.3,-57.7 66.7,0 33.3,57.7 -33.3,57.7 -66.7,0"/><polygon points="-16.7,-28.9 16.7,-28.9 33.3,0 16.7,28.9 -16.7,28.9 -33.3,0"/><path d="M0 0L-50 -86.6M0 0L50 -86.6M0 0L100 0M0 0L50 86.6M0 0L-50 86.6M0 0L-100 0"/></g>
+                  <polygon class="prev" pathLength="1" points="-36,-62.4 30,-52 22,0 34,58.9 -24,41.6 -62,0"/>
+                  <polygon class="this" pathLength="1" points="-30,-52 34,-58.9 16,0 30,52 -27,46.8 -48,0"/>
+                  <g class="lbl"><text x="-58" y="-96">Back</text><text x="58" y="-96" text-anchor="end">Chest</text><text x="106" y="4">Core</text><text x="58" y="106" text-anchor="end">Shoulders</text><text x="-58" y="106">Arms</text><text x="-106" y="4" text-anchor="end">Legs</text></g>
+                </svg>
+                <p class="pc-legend2"><span class="l-this">This period</span><span class="l-prev">Previous period</span></p>
+              </div>
+            </li>
+            <li class="pstep" data-step="3">
+              <h3>How far you go</h3>
+              <p>Movement shows your weekly distance across runs, walks and rides, and your pace over time.</p>
+              <div class="pcard pc-move">
+                <p class="pc-t">Movement overview</p>
+                <p class="pc-big"><strong>7.4 km</strong> · 1h 12m · 4 activities</p>
+                <svg class="dist" viewBox="0 0 320 150" role="img" aria-label="Weekly distance over the last 90 days, rising from nothing to a peak of nearly 10 kilometres, 7.4 kilometres in the selected week.">
+                  <g class="grid"><path d="M0 130H300M0 80H300M0 30H300"/></g>
+                  <path class="area" d="M8 130 L30 130 L52 130 L74 130 L96 128 L118 122 L140 114 L162 104 L184 106 L206 90 L228 82 L250 32 L272 66 L294 92 L294 130 Z"/>
+                  <path class="line" d="M8 130 L30 130 L52 130 L74 130 L96 128 L118 122 L140 114 L162 104 L184 106 L206 90 L228 82 L250 32 L272 66 L294 92" pathLength="1"/>
+                  <circle class="dot" cx="250" cy="32" r="6"/>
+                  <g class="ax"><text x="304" y="134">0</text><text x="304" y="84">5 km</text><text x="304" y="34">10 km</text></g>
+                </svg>
+                <p class="pc-foot"><span>Last 90 days</span><span>Weekly distance</span></p>
+              </div>
+            </li>
+          </ol>
+          <div class="prog-stage" aria-hidden="true"></div>
         </div>
       </div>
     </section>
 
+    <!-- 7. Friends: people first, the feed second -->
     <section class="sec friends" id="friends" aria-labelledby="friends-h">
-      <div class="wrap feat-grid friends-grid">
-        <div class="feat-phone"><div class="phone "><picture><source type="image/avif" srcset="/assets/screens/home.avif"><source type="image/webp" srcset="/assets/screens/home.webp"><img src="/assets/screens/home.png" width="720" height="1564" alt="Bayda’s feed: a friend’s Push Day workout with its volume, sets and records, and the week strip above it." loading="lazy" decoding="async"></picture></div></div>
-        <div class="copy">
-          <h2 id="friends-h">Better with friends.</h2>
-          <p class="lead">Follow friends, cheer on their workouts and tag the people you trained with.</p>
-          <ul class="ticks"><li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Every workout has its own audience</span></li><li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Hide your pace or start time on any post</span></li></ul>
+      <div class="wrap">
+        <div class="friends-frame">
+          <figure class="photo friends-photo"><picture><source type="image/avif" srcset="/assets/photos/friends-park-960.avif 960w, /assets/photos/friends-park-1440.avif 1440w, /assets/photos/friends-park-1920.avif 1920w" sizes="(max-width: 1240px) 92vw, 1160px"><source type="image/webp" srcset="/assets/photos/friends-park-960.webp 960w, /assets/photos/friends-park-1440.webp 1440w, /assets/photos/friends-park-1920.webp 1920w" sizes="(max-width: 1240px) 92vw, 1160px"><img src="/assets/photos/friends-park-1440.jpg" width="1440" height="804" alt="Two friends jogging side by side through a park on a misty morning." loading="lazy" decoding="async"></picture></figure>
+          <div class="friends-card" data-reveal>
+            <div class="copy">
+              <h2 id="friends-h">Better with friends.</h2>
+              <p class="lead">Follow friends, cheer on their workouts and tag the people you trained with.</p>
+              <ul class="ticks">
+                <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>Every workout has its own audience</span></li>
+                <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>Hide your pace or start time on any post</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="post-card" data-reveal><picture><source type="image/avif" srcset="/assets/screens/crop-feed-post.avif"><source type="image/webp" srcset="/assets/screens/crop-feed-post.webp"><img src="/assets/screens/crop-feed-post.png" width="660" height="864" alt="A Push Day post in Bayda’s feed: 1 hour 4 minutes, 7,420 kilograms, 18 sets and 3 records, the exercises, and 2 likes and a comment." loading="lazy" decoding="async"></picture></div>
         </div>
       </div>
     </section>
 
-    <section class="sec privacy" id="privacy" aria-labelledby="privacy-h">
-      <div class="wrap privacy-grid">
-        <div class="privacy-copy">
-          <h2 id="privacy-h" class="big">Your data stays yours.</h2>
-          <ul class="promises">
-            <li>Stored in Ireland, under EU law.</li>
-            <li>No ads. No trackers. Never sold.</li>
-            <li>Export or delete everything, right from Settings.</li>
-          </ul>
-          <p class="more-row"><a class="more" href="/privacy/">Read the privacy policy</a></p>
+    <!-- 8. More: varied cards, each with one small honest graphic -->
+    <section class="sec more" id="more" aria-labelledby="more-h">
+      <div class="wrap">
+        <div class="sec-head" data-reveal>
+          <h2 id="more-h">Thought through, down to the details.</h2>
+          <p class="lead">The smaller things that make Bayda easy to live with.</p>
         </div>
-        <div class="privacy-phones">
-          <div class="phone "><picture><source type="image/avif" srcset="/assets/screens/visibility.avif"><source type="image/webp" srcset="/assets/screens/visibility.webp"><img src="/assets/screens/visibility.png" width="720" height="1564" alt="Bayda’s Who can see this workout panel: Default, Anyone on Bayda, Followers or Only me." loading="lazy" decoding="async"></picture></div>
-          <div class="phone "><picture><source type="image/avif" srcset="/assets/screens/save-run.avif"><source type="image/webp" srcset="/assets/screens/save-run.webp"><img src="/assets/screens/save-run.png" width="720" height="1564" alt="Bayda’s Save run page with Hidden details: switches for heart rate, calories, power, pace and speed, start time and full route." loading="lazy" decoding="async"></picture></div>
+        <div class="mgrid">
+          <article class="m m-import" data-reveal>
+            <div class="m-copy">
+              <h3>Bring your history with you.</h3>
+              <p>Import a Strong CSV export, or Strava GPX and TCX files and the full Strava export. The file is read on your iPhone and never uploaded. What is in it becomes workouts in your account, at their original dates.</p>
+            </div>
+            <div class="orbit" aria-hidden="true">
+              <svg class="orbit-lines" viewBox="0 0 400 300" preserveAspectRatio="none"><path d="M10 40 C 150 40, 220 120, 300 150"/><path d="M0 150 C 120 150, 200 150, 300 150"/><path d="M10 260 C 150 260, 220 180, 300 150"/></svg>
+              <span class="chip c1">Strong · CSV</span>
+              <span class="chip c2">Strava · GPX</span>
+              <span class="chip c3">Strava · TCX</span>
+              <span class="chip c4">Strava export · ZIP</span>
+              <span class="orbit-app"><img src="/assets/logo-192.png" width="64" height="64" alt="" loading="lazy" decoding="async"></span>
+            </div>
+          </article>
+          <article class="m m-aud" data-reveal>
+            <div class="m-copy">
+              <h3>Every workout has its own audience.</h3>
+              <p>Anyone on Bayda, your followers, or only you, chosen workout by workout.</p>
+            </div>
+            <div class="m-shot"><div class="phone"><picture><source type="image/avif" srcset="/assets/screens/visibility.avif"><source type="image/webp" srcset="/assets/screens/visibility.webp"><img src="/assets/screens/visibility.png" width="720" height="1564" alt="Bayda’s Who can see this workout panel: Default, Anyone on Bayda, Followers or Only me." loading="lazy" decoding="async"></picture></div></div>
+          </article>
+          <article class="m m-rec" data-reveal>
+            <div class="m-art"><span class="rosette"><svg width="34" height="34" aria-hidden="true"><use href="#i-trophy"/></svg></span><p class="m-num"><span data-count="7" data-from="0">7</span><small>records</small></p></div>
+            <div class="m-copy"><h3>Records, noticed.</h3><p>Bayda marks every personal best, set by set.</p></div>
+          </article>
+          <article class="m m-rest" data-reveal>
+            <div class="m-art"><svg class="timer" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42" class="ring-track"/><circle cx="50" cy="50" r="42" class="timer-val" pathLength="1"/><text x="50" y="57" text-anchor="middle">1:30</text></svg></div>
+            <div class="m-copy"><h3>Rest, timed.</h3><p>The rest timer follows you to the lock screen.</p></div>
+          </article>
+          <article class="m m-code" data-reveal>
+            <div class="m-art"><span class="barcode" aria-hidden="true"><svg viewBox="0 0 120 64"><g fill="#1C1C1E"><rect x="4" y="4" width="4" height="56"/><rect x="12" y="4" width="2" height="56"/><rect x="18" y="4" width="6" height="56"/><rect x="28" y="4" width="2" height="56"/><rect x="34" y="4" width="4" height="56"/><rect x="42" y="4" width="2" height="56"/><rect x="48" y="4" width="6" height="56"/><rect x="58" y="4" width="2" height="56"/><rect x="64" y="4" width="4" height="56"/><rect x="72" y="4" width="6" height="56"/><rect x="82" y="4" width="2" height="56"/><rect x="88" y="4" width="4" height="56"/><rect x="96" y="4" width="2" height="56"/><rect x="102" y="4" width="6" height="56"/><rect x="112" y="4" width="4" height="56"/></g></svg><span class="scanline"></span></span></div>
+            <div class="m-copy"><h3>Barcode or label.</h3><p>Packaged food goes in with one scan, no photo needed.</p></div>
+          </article>
+          <article class="m m-goal" data-reveal>
+            <div class="m-copy"><h3>A weekly goal and a day streak.</h3><p>Pick how many sessions a week. Bayda keeps count, and celebrates the days in a row.</p></div>
+            <div class="m-art goal-art" aria-label="2 of 3 sessions this week, 4 day streak">
+              <ol class="days"><li class="on">M</li><li class="on">T</li><li>W</li><li class="on">T</li><li class="on">F</li><li>S</li><li>S</li></ol>
+              <p class="goal-n"><strong>2 of 3</strong> this week<span class="sep" aria-hidden="true"> · </span><strong>4</strong> day streak</p>
+            </div>
+          </article>
+          <article class="m m-health" data-reveal>
+            <div class="m-copy"><h3>Works with Apple Health.</h3><p>Bring in the workouts you record on Apple Watch or in other apps, with their routes, and save your Bayda activities back if you turn that on.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Privacy: where your data actually goes -->
+    <section class="sec privacy" id="privacy" aria-labelledby="privacy-h">
+      <div class="wrap">
+        <div class="priv-panel">
+          <div class="sec-head" data-reveal>
+            <h2 id="privacy-h">Your data stays yours.</h2>
+            <p class="lead">Here is where it goes, and where it never does.</p>
+          </div>
+          <div class="flow" data-reveal>
+            <div class="node n-phone"><span class="n-ic"><svg width="26" height="26" aria-hidden="true"><use href="#i-phone"/></svg></span><h3>Your iPhone</h3><p>Where you log it all. Import files are read here and never uploaded.</p></div>
+            <div class="node n-cloud"><span class="n-ic"><svg width="26" height="26" aria-hidden="true"><use href="#i-cloud"/></svg></span><h3>Your account</h3><p>Stored in Ireland, under EU law. Export or delete everything, right from Settings.</p></div>
+            <div class="node n-people"><span class="n-ic"><svg width="26" height="26" aria-hidden="true"><use href="#i-people"/></svg></span><h3>People you choose</h3><p>Each workout has its own audience, down to only you. Hide your pace, start time or heart rate on any post.</p></div>
+            <div class="node n-ai"><span class="n-ic"><svg width="26" height="26" aria-hidden="true"><use href="#i-camera"/></svg></span><h3>Food photos, if you agree</h3><p>Made smaller, stripped of location and sent to Anthropic’s Claude to estimate the food. Not used for training, deleted within 30 days.</p></div>
+            <div class="node n-none"><span class="n-ic"><svg width="26" height="26" aria-hidden="true"><use href="#i-block"/></svg></span><h3>Nobody else</h3><p>No ads. No trackers. Never sold.</p></div>
+            <svg class="flow-lines" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true">
+              <path class="fl" d="M500 210 C 380 210, 330 110, 200 110"/>
+              <path class="fl" d="M500 210 C 620 210, 670 110, 800 110"/>
+              <path class="fl dash" d="M500 210 C 620 210, 670 320, 800 320"/>
+              <path class="fl none" d="M500 210 C 380 210, 330 320, 200 320"/>
+            </svg>
+          </div>
+          <p class="more-row"><a class="more" href="/privacy/">Read the privacy policy</a></p>
         </div>
       </div>
     </section>
@@ -256,16 +523,21 @@
       </div>
     </section>
 
-    <section class="scene end" id="download" aria-labelledby="final-h">
-      <div class="scene-photo"><picture class="scene-img"><source type="image/avif" srcset="/assets/photos/friends-highfive-960.avif 960w, /assets/photos/friends-highfive-1440.avif 1440w, /assets/photos/friends-highfive-1920.avif 1920w" sizes="(max-width: 859px) 200vw, 100vw"><source type="image/webp" srcset="/assets/photos/friends-highfive-960.webp 960w, /assets/photos/friends-highfive-1440.webp 1440w, /assets/photos/friends-highfive-1920.webp 1920w" sizes="(max-width: 859px) 200vw, 100vw"><img src="/assets/photos/friends-highfive-1440.jpg" width="1440" height="804" alt="Two friends high-fiving on a tree-lined path at golden hour." loading="lazy" decoding="async"></picture></div>
-      <div class="wrap end-copy">
-        <h2 id="final-h">One app for the whole week.</h2>
-        <p class="lead">Log a set, a run or a plate, and watch your weeks add up.</p>
-        <div class="cta-row">
-          <!-- APP STORE URL: wrap this badge in <a href="App Store URL"> at launch, as in the hero -->
-          <span class="badge"><img src="/assets/app-store-badge.svg" width="120" height="40" alt="Download on the App Store" loading="lazy" decoding="async"></span>
-          <p class="caption">Now in testing. Coming soon to the App Store.</p>
-          <p class="caption">Want to know when it launches? <a href="#contact">Send us a note</a>.</p>
+    <section class="sec end" id="download" aria-labelledby="final-h">
+      <div class="wrap">
+        <div class="end-frame">
+          <figure class="photo end-photo"><picture><source type="image/avif" srcset="/assets/photos/friends-highfive-960.avif 960w, /assets/photos/friends-highfive-1440.avif 1440w, /assets/photos/friends-highfive-1920.avif 1920w" sizes="(max-width: 1240px) 92vw, 1160px"><source type="image/webp" srcset="/assets/photos/friends-highfive-960.webp 960w, /assets/photos/friends-highfive-1440.webp 1440w, /assets/photos/friends-highfive-1920.webp 1920w" sizes="(max-width: 1240px) 92vw, 1160px"><img src="/assets/photos/friends-highfive-1440.jpg" width="1440" height="804" alt="Two friends high-fiving on a tree-lined path at golden hour." loading="lazy" decoding="async"></picture></figure>
+          <div class="end-card" data-reveal>
+            <img class="end-logo" src="/assets/logo-192.png" width="56" height="56" alt="" loading="lazy" decoding="async">
+            <h2 id="final-h">One app for the whole week.</h2>
+            <p class="lead">Log a set, a run or a plate, and watch your weeks add up.</p>
+            <div class="cta-row">
+              <!-- APP STORE URL: wrap this badge in <a href="App Store URL"> at launch, as in the hero -->
+              <span class="badge"><img src="/assets/app-store-badge.svg" width="120" height="40" alt="Download on the App Store" loading="lazy" decoding="async"></span>
+              <p class="caption">Now in testing. Coming soon to the App Store.</p>
+              <p class="caption">Want to know when it launches? <a href="#contact">Send us a note</a>.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -290,118 +562,6 @@
       <p class="fine">&copy; 2026 Baydalabs. Apple, the Apple logo, iPhone and Apple Watch are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.</p>
     </div>
   </footer>
-
-  <div class="sticky" id="sticky" aria-hidden="true">
-    <div class="sticky-in">
-      <img src="/assets/logo-192.png" width="36" height="36" alt="" loading="lazy" decoding="async">
-      <div class="sticky-t"><strong>Bayda</strong><span>Coming soon to the App Store</span></div>
-      <!-- APP STORE URL: replace #download with the App Store link at launch -->
-      <a class="btn" href="#download" tabindex="-1">Get the app</a>
-    </div>
-  </div>
-  <script>
-(function () {
-  var openedAt = performance.now();
-
-  /* Mobile sticky download bar: shows once the hero badge has scrolled away; hides at the contact form and the final section. */
-  var bar = document.getElementById('sticky'), hero = document.getElementById('hero-badge'), end = document.getElementById('download');
-  var contact = document.getElementById('contact'), cform = document.getElementById('contact-form');
-  if (bar && hero && end && 'IntersectionObserver' in window) {
-    var past = false, atEnd = false, inContact = false, typing = false, links = bar.querySelectorAll('a');
-    var update = function () {
-      var on = past && !atEnd && !inContact && !typing;
-      bar.classList.toggle('on', on);
-      document.body.classList.toggle('bar-on', on);
-      bar.setAttribute('aria-hidden', on ? 'false' : 'true');
-      for (var i = 0; i < links.length; i++) links[i].tabIndex = on ? 0 : -1;
-    };
-    new IntersectionObserver(function (e) { past = !e[0].isIntersecting && e[0].boundingClientRect.top < 0; update(); }).observe(hero);
-    new IntersectionObserver(function (e) { atEnd = e[0].isIntersecting; update(); }).observe(end);
-    if (contact) new IntersectionObserver(function (e) { inContact = e[0].isIntersecting; update(); }).observe(contact);
-    if (cform) {
-      cform.addEventListener('focusin', function () { typing = true; update(); });
-      cform.addEventListener('focusout', function (e) { typing = !!(e.relatedTarget && cform.contains(e.relatedTarget)); update(); });
-    }
-  }
-
-  /* Contact form. Without JS the form stays hidden and the email address below it is the way in. */
-  var form = document.getElementById('contact-form');
-  if (!form || !window.fetch) return;
-  var status = document.getElementById('contact-status'), send = document.getElementById('cf-send');
-  var fields = { name: form.elements.name, email: form.elements.email, message: form.elements.message };
-  var MAIL = '<a href="mailto:david@baydalabs.com">david@baydalabs.com</a>';
-  var MSG = {
-    name: 'Please enter your name.',
-    email: 'Please enter a valid email address.',
-    message: 'Please write at least 10 characters.'
-  };
-  form.hidden = false;
-
-  function setError(key, text) {
-    var f = fields[key], out = document.getElementById('cf-' + key + '-err');
-    out.textContent = text || '';
-    if (text) f.setAttribute('aria-invalid', 'true'); else f.removeAttribute('aria-invalid');
-  }
-  function clearAll() { for (var k in fields) setError(k, ''); status.textContent = ''; status.className = 'cstatus'; }
-  function notice(html) { status.className = 'cstatus on'; status.innerHTML = html; }
-  function failure() { notice('<p>The form is not working right now. Please email us at ' + MAIL + '.</p>'); }
-  function values() {
-    return { name: fields.name.value.trim(), email: fields.email.value.trim(), message: fields.message.value.trim() };
-  }
-  function invalid(v) {
-    var bad = [];
-    if (v.name.length < 1 || v.name.length > 100) bad.push('name');
-    if (v.email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email)) bad.push('email');
-    if (v.message.length < 10 || v.message.length > 5000) bad.push('message');
-    return bad;
-  }
-  for (var k in fields) fields[k].addEventListener('input', function (e) { setError(e.target.name, ''); });
-
-  form.addEventListener('submit', function (ev) {
-    ev.preventDefault();
-    if (send.disabled) return;
-    clearAll();
-    var v = values(), bad = invalid(v);
-    if (bad.length) {
-      for (var i = 0; i < bad.length; i++) setError(bad[i], MSG[bad[i]]);
-      fields[bad[0]].focus();
-      return;
-    }
-    var ctrl = new AbortController(), timer = setTimeout(function () { ctrl.abort(); }, 15000);
-    send.disabled = true; send.textContent = 'Sending...'; form.setAttribute('aria-busy', 'true');
-    fetch('https://wazgvaerwdqutzcqdgka.supabase.co/functions/v1/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: v.name, email: v.email, message: v.message,
-        website: document.getElementById('cf-website').value,
-        elapsed_ms: Math.round(performance.now() - openedAt)
-      }),
-      signal: ctrl.signal
-    }).then(function (res) {
-      if (res.ok) {
-        form.hidden = true;
-        status.className = 'cstatus on done';
-        status.innerHTML = '<h3>Thanks, your message is on its way.</h3><p>You will get an answer at <strong></strong>.</p>';
-        status.querySelector('strong').textContent = v.email;
-        return;
-      }
-      if (res.status === 400) {
-        return res.json().then(function (j) { return j && j.field; }, function () { return null; }).then(function (field) {
-          if (fields[field]) { setError(field, MSG[field]); fields[field].focus(); } else failure();
-        });
-      }
-      if (res.status === 429) {
-        notice('<p>Too many messages from here in the last hour. Please email ' + MAIL + ' instead.</p>');
-        return;
-      }
-      failure();
-    }).catch(failure).then(function () {
-      clearTimeout(timer);
-      send.disabled = false; send.textContent = 'Send message'; form.removeAttribute('aria-busy');
-    });
-  });
-})();
-</script>
+  <script src="/assets/site.js" defer></script>
 </body>
 </html>
