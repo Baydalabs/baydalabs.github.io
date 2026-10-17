@@ -10,7 +10,8 @@
   /* ---------- Dock: wide over the hero, a compact pill once you scroll; a menu on phones ---------- */
   var header = document.getElementById('dock');
   if (header) {
-    var setCompact = function () { header.classList.toggle('compact', window.scrollY > 40); };
+    var menuEl = document.getElementById('menu');
+    var setCompact = function () { header.classList.toggle('compact', window.scrollY > 40 || (menuEl && !menuEl.hidden)); };
     setCompact();
     window.addEventListener('scroll', setCompact, { passive: true });
 
@@ -18,13 +19,13 @@
     if (btn && menu) {
       btn.hidden = false;
       var close = function (focusBtn) {
-        menu.hidden = true; btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); setCompact();
         btn.querySelector('use').setAttribute('href', '#i-menu');
         if (focusBtn) btn.focus();
       };
       btn.addEventListener('click', function () {
         var open = menu.hidden;
-        menu.hidden = !open; btn.setAttribute('aria-expanded', String(open));
+        menu.hidden = !open; btn.setAttribute('aria-expanded', String(open)); setCompact();
         btn.querySelector('use').setAttribute('href', open ? '#i-close' : '#i-menu');
         if (open) { var first = menu.querySelector('a'); if (first) first.focus(); }
       });
@@ -35,21 +36,32 @@
     }
   }
 
-  /* ---------- Reveal once ---------- */
+  /* ---------- Reveal: plays when an element comes on screen, and resets once it has left, so it plays again next time
+     (David, 17 Oct 2026: "once the animations are done, they never come back") ---------- */
   var revealEls = [].slice.call(document.querySelectorAll('[data-reveal], .train-stage, .pstep .pcard, .m'));
   if (motion && 'IntersectionObserver' in window) {
     var rio = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        // also reveal anything skipped over by a fast fling or an anchor jump (already above the screen)
-        if (!en.isIntersecting && en.boundingClientRect.top > 0) return;
-        en.target.classList.add('in', 'play');
-        countIn(en.target);
-        rio.unobserve(en.target);
+        if (en.isIntersecting) {
+          if (en.target.classList.contains('in')) return;
+          en.target.classList.add('in', 'play');
+          countIn(en.target);
+          restIn(en.target);
+        }
       });
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.15 });
-    revealEls.forEach(function (el) { rio.observe(el); });
+    // a second observer with no margin: only when the element is wholly off screen is it reset
+    var rout = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) return;
+        en.target.classList.remove('in', 'play', 'done');
+        var t = en.target.querySelector && en.target.querySelector('[data-rest]');
+        if (t) { t.restRun = (t.restRun || 0) + 1; t.textContent = '1:30'; }
+      });
+    }, { threshold: 0 });
+    revealEls.forEach(function (el) { rio.observe(el); rout.observe(el); });
   } else {
-    revealEls.forEach(function (el) { el.classList.add('in', 'play'); });
+    revealEls.forEach(function (el) { el.classList.add('in', 'play', 'done'); });
   }
 
   /* Counters: 2,524 -> 831 calories, 0 -> 7 records. The final value is in the HTML; this only animates toward it. */
@@ -66,6 +78,24 @@
       };
       setTimeout(function () { requestAnimationFrame(step); }, 250);
     });
+  }
+
+  /* Rest, timed: counts 1:30 down to 0:00 alongside the ring, then the card turns to its done check. */
+  function restIn(scope) {
+    var t = scope.querySelector && scope.querySelector('[data-rest]');
+    if (!t) return;
+    var total = +t.getAttribute('data-rest'), t0 = null, dur = 3000, run = t.restRun = (t.restRun || 0) + 1;
+    var fmt = function (s) { s = Math.ceil(s); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); };
+    setTimeout(function () {
+      var step = function (now) {
+        if (run !== t.restRun) return;  // reset (scrolled away) or restarted
+        if (t0 === null) t0 = now;
+        var k = Math.min(1, (now - t0) / dur);
+        t.textContent = fmt(total * (1 - k));
+        if (k < 1) requestAnimationFrame(step); else scope.classList.add('done');
+      };
+      requestAnimationFrame(step);
+    }, 400);
   }
 
   /* Gentle loops (orbit, barcode, privacy flow) run only while on screen. */
@@ -88,13 +118,14 @@
   var routeLen = 0, markEls = [];
   if (route && route.getTotalLength) {
     routeLen = route.getTotalLength();
-    // kilometre markers along the illustrated 5.24 km route
-    for (var km = 1; km <= 5; km++) {
-      var pt = route.getPointAtLength(routeLen * km / 5.24);
+    // kilometre markers at the route's real kilometres (make-move-map.py writes its length to data-km)
+    var routeKm = +route.getAttribute('data-km') || 5.24;
+    for (var km = 1; km < routeKm; km++) {
+      var pt = route.getPointAtLength(routeLen * km / routeKm);
       var g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       g.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ' ' + pt.y.toFixed(1) + ')');
       g.innerHTML = '<circle r="11"/><text y="4">' + km + '</text>';
-      g.dataset.at = km / 5.24;
+      g.dataset.at = km / routeKm;
       marks.appendChild(g); markEls.push(g);
     }
   }
@@ -141,7 +172,6 @@
         if (next !== s.cur) {
           s.cur = next;
           s.el.style.setProperty('--p', next.toFixed(4));
-          if (s.el.classList.contains('hero')) s.el.classList.toggle('past', next > 0.3);
           if (s.el.classList.contains('move-scene')) routeAt(Math.min(1, Math.max(0, (next - 0.08) / 0.72)));
         }
       }
