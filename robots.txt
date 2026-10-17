@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://baydalabs.com/sitemap.xml
+Sitemap: https://bayda-app.com/sitemap.xml

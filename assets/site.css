@@ -408,6 +408,9 @@ a.badge:hover { opacity: .88; text-decoration: none; }
 .move-grid { display: grid; gap: 40px; position: relative; }
 .map-card { position: relative; background: #fff; border-radius: var(--r-xl); box-shadow: var(--sh-card); overflow: hidden; }
 .map { width: 100%; height: auto; }
+/* the street map is a static layer of its own; the route svg on top is the only thing that repaints while it draws */
+.map:not(.map-over) { will-change: transform; }
+.map-over { position: absolute; left: 0; top: 0; pointer-events: none; }
 .map-note { position: absolute; right: 12px; top: 12px; font-size: 11.5px; color: var(--body); background: rgba(255, 255, 255, .88); padding: 3px 9px; border-radius: 999px; }
 .map-note a { color: inherit; }
 .route, .route-case { stroke-dasharray: 1; stroke-dashoffset: 0; }
@@ -615,21 +618,21 @@ a.badge:hover { opacity: .88; text-decoration: none; }
 .friends-photo { order: 1; } .post-card { order: 2; } .friends-card { order: 3; }
 .friends-photo { aspect-ratio: 4 / 5; }
 .friends-photo img { object-position: 84% 50%; }
-.post-card { position: relative; width: min(64%, 260px); margin: -22% 0 0 auto; margin-right: 12px; background: #fff; border-radius: 22px; box-shadow: var(--sh-float); padding: 14px 8px 6px; }
+.post-card { position: relative; width: min(88%, 360px); margin: -8% 0 0 auto; margin-right: 12px; background: #fff; border-radius: 22px; box-shadow: var(--sh-float); padding: 14px 8px 6px; }
 .post-card img { border-radius: 10px; }
 .friends-card { margin-top: 36px; }
 .motion .post-card { opacity: 0; transform: translateY(50px) rotate(2deg); transition: opacity .7s ease .15s, transform 1s var(--ease) .15s; }
 .motion .post-card.in { opacity: 1; transform: none; }
 @media (min-width: 860px) {
   .friends-photo { aspect-ratio: 16 / 9; }
-  .friends-frame { margin-bottom: 150px; }
+  .friends-frame { margin-bottom: 420px; }
   .friends-card { position: absolute; left: 40px; bottom: -150px; margin: 0; width: min(440px, 40%); padding: 36px 36px 34px; background: #fff; border-radius: var(--r-lg); box-shadow: var(--sh-float); }
   .friends-card h2 { font-size: clamp(36px, 3.4vw, 50px); }
   .friends-card .lead { font-size: 18px; }
   .friends-photo img { object-position: 50% 50%; }
-  /* the pair trains on the right and a sled push runs through the middle left: the post card hangs off the photo's top-left
-     corner, the copy card sits on the floor at the bottom left */
-  .post-card { position: absolute; left: 40px; top: -64px; margin: 0; width: clamp(200px, 16vw, 230px); }
+  /* the pair trains on the right and a sled push runs through the middle left: both cards hang below the photo, the copy
+     card at the left over the turf, the feed post (big enough to read, 17 Oct 2026) at the right over the floor and rack */
+  .post-card { position: absolute; right: 40px; bottom: -400px; margin: 0; width: clamp(300px, 25vw, 360px); }
 }
 
 /* ================= 8. More ================= */
@@ -853,7 +856,7 @@ a.badge:hover { opacity: .88; text-decoration: none; }
    Bevel's: the black cap is huge and cut by the right edge, the Bayda bottle big and cut by the left, the towel large;
    the rest are small and sit close to the phone. Each object sits at (50 % + --cx, --cy) of the stage, centred. */
 .kit { position: absolute; z-index: 1; left: calc(50% + var(--cx)); top: var(--cy); width: var(--kw); transform: translate(-50%, -50%); }
-.kit img { width: 100%; height: auto; filter: drop-shadow(0 14px 18px rgba(20, 20, 30, .16)) drop-shadow(0 3px 5px rgba(20, 20, 30, .1)); }
+.kit img { width: 100%; height: auto; filter: drop-shadow(0 12px 16px rgba(20, 20, 30, .18)); }
 .flatlay-stage { height: 720px; }
 .k-sunglasses { --cx: -36vw; --cy: 7%; --kw: 22vw; }
 .k-bottle { --cx: -46vw; --cy: 33%; --kw: 13vw; }
