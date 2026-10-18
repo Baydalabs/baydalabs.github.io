@@ -249,6 +249,13 @@ a.badge:hover { opacity: .88; text-decoration: none; }
   .motion .home .week { position: relative; z-index: 3; margin-top: -40vh; margin-top: -40svh; background: var(--bg);
     border-radius: var(--r-xl) var(--r-xl) 0 0; box-shadow: 0 -12px 34px -12px rgba(30, 30, 70, .16); }
 }
+/* Phones (18 Oct 2026): at +-47vw the cards ended mostly off screen and behind the phone, so only slivers showed. They
+   are smaller here, land overlapping the phone's rim and float in front of it, whole on screen. */
+@media (max-width: 559.98px) {
+  .hero-fan { z-index: 3; }
+  .fan-card { width: 38vw; }
+  .f1, .f2, .f3 { --x: -29vw; } .f4, .f5, .f6 { --x: 29vw; }
+}
 @media (min-width: 560px) and (max-width: 859.98px) {
   .fan-card { width: 230px; }
   .f1, .f2, .f3 { --x: -230px; } .f4, .f5, .f6 { --x: 230px; }

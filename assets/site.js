@@ -23,15 +23,18 @@
         btn.querySelector('use').setAttribute('href', '#i-menu');
         if (focusBtn) btn.focus();
       };
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', function (e) {
         var open = menu.hidden;
         menu.hidden = !open; btn.setAttribute('aria-expanded', String(open)); setCompact();
         btn.querySelector('use').setAttribute('href', open ? '#i-close' : '#i-menu');
-        if (open) { var first = menu.querySelector('a'); if (first) first.focus(); }
+        // keyboard only (a tap has e.detail > 0): focusing on a tap drew a focus ring round Features on phones
+        if (open && e.detail === 0) { var first = menu.querySelector('a'); if (first) first.focus(); }
       });
       menu.addEventListener('click', function (e) { if (e.target.closest('a')) close(false); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) close(true); });
-      document.addEventListener('click', function (e) { if (!menu.hidden && !header.contains(e.target)) close(false); });
+      // pointerdown, not click: iOS Safari sends no click for a tap on a non-interactive element, so tapping the page
+      // never closed the menu on iPhones
+      document.addEventListener('pointerdown', function (e) { if (!menu.hidden && !header.contains(e.target)) close(false); });
       matchMedia('(min-width: 860px)').addEventListener('change', function () { close(false); });
     }
   }
@@ -222,7 +225,7 @@
   if (!form || !window.fetch) return;
   var status = document.getElementById('contact-status'), send = document.getElementById('cf-send');
   var fields = { name: form.elements.name, email: form.elements.email, message: form.elements.message };
-  var MAIL = '<a href="mailto:david@baydalabs.com">david@baydalabs.com</a>';
+  var MAIL = '<a href="mailto:david@bayda-app.com">david@bayda-app.com</a>';
   var MSG = {
     name: 'Please enter your name.',
     email: 'Please enter a valid email address.',
