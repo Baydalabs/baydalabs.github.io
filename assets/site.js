@@ -225,7 +225,7 @@
   if (!form || !window.fetch) return;
   var status = document.getElementById('contact-status'), send = document.getElementById('cf-send');
   var fields = { name: form.elements.name, email: form.elements.email, message: form.elements.message };
-  var MAIL = '<a href="mailto:david@bayda-app.com">david@bayda-app.com</a>';
+  var MAIL = '<a href="mailto:contact@bayda-app.com">contact@bayda-app.com</a>';
   var MSG = {
     name: 'Please enter your name.',
     email: 'Please enter a valid email address.',
