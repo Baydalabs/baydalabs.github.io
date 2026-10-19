@@ -41,7 +41,10 @@
 
   /* ---------- Reveal: plays when an element comes on screen, and resets once it has left, so it plays again next time
      (David, 17 Oct 2026: "once the animations are done, they never come back") ---------- */
-  var revealEls = [].slice.call(document.querySelectorAll('[data-reveal], .train-stage, .pstep .pcard, .m'));
+  var rowMq = window.matchMedia('(max-width: 859.98px)');
+  /* on phones the four Progress charts are a snapping row with their own observer (below), not this one */
+  var revealEls = [].slice.call(document.querySelectorAll('[data-reveal], .train-stage, .pstep .pcard, .m, .frow'))
+    .filter(function (el) { return !(rowMq.matches && el.matches('.pstep .pcard')); });
   if (motion && 'IntersectionObserver' in window) {
     var rio = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
@@ -102,12 +105,103 @@
   }
 
   /* Gentle loops (orbit, barcode, privacy flow) run only while on screen. */
-  var live = document.querySelectorAll('.orbit, .m-code, .flow');
+  var live = document.querySelectorAll('.orbit, .m-code, .frow-code, .flow');
   if (motion && 'IntersectionObserver' in window) {
     var lio = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) { en.target.classList.toggle('live', en.isIntersecting); });
     });
     [].forEach.call(live, function (el) { lio.observe(el); });
+  }
+
+  /* ---------- Item 9: import chips fly along the drawn lines into the B ----------
+     The positions come from the SVG paths scaled to the orbit's rendered size, so the chips follow the lines at any width.
+     One chip leaves every 0.9 s (Strava, Hevy, Strong, Apple Health), eases in (slow start, accelerates), slips behind the B
+     and the B bounces. Runs only while the card is on screen; reduced motion leaves the chips where the CSS puts them. */
+  var orbit = document.querySelector('.orbit');
+  if (orbit && motion) {
+    var oChips = [].slice.call(orbit.querySelectorAll('.chip')), oPaths = [].slice.call(orbit.querySelectorAll('.orbit-lines path'));
+    var oApp = orbit.querySelector('.orbit-app'), oRoute = [0, 1, 2, 1], oLen = oPaths.map(function (p) { return p.getTotalLength(); });
+    var GAP = 0.9, FLY = 2.4, CYCLE = GAP * oChips.length, oDone = [], oRaf = 0, oT0 = 0;
+    var oFrame = function (now) {
+      var box = orbit.getBoundingClientRect(), sx = box.width / 400, sy = box.height / 300;
+      var t = (now - oT0) / 1000;
+      oChips.forEach(function (chip, k) {
+        var local = (((t - k * GAP) % CYCLE) + CYCLE) % CYCLE;
+        if (local >= FLY) {
+          chip.style.opacity = '0';
+          if (!oDone[k]) { oDone[k] = true; if (oApp.animate) oApp.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)', offset: .3 }, { transform: 'scale(1)' }], { duration: 340, easing: 'ease-out' }); }
+          return;
+        }
+        oDone[k] = false;
+        var u = local / FLY, e = u * u;  // slow start, speeds up
+        var pi = oRoute[k], pt = oPaths[pi].getPointAtLength(oLen[pi] * e);
+        var w = chip.offsetWidth, h = chip.offsetHeight;
+        // the chip's left edge sits on the line at the start and its centre on the B at the end
+        var x = pt.x * sx - (w / 2) * e, y = pt.y * sy - h / 2;
+        var fadeIn = Math.min(1, u / .06), shrink = u > .9 ? 1 - (u - .9) / .1 : 1;
+        chip.style.opacity = String(Math.max(0, Math.min(fadeIn, shrink * 1.2)));
+        chip.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + (.7 + .3 * Math.min(1, shrink * 1.5)).toFixed(3) + ')';
+      });
+      oRaf = requestAnimationFrame(oFrame);
+    };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting && !oRaf) { oT0 = performance.now() - 300; oRaf = requestAnimationFrame(oFrame); }
+          else if (!en.isIntersecting && oRaf) { cancelAnimationFrame(oRaf); oRaf = 0; }
+        });
+      }).observe(orbit);
+    }
+  }
+
+  /* ---------- Item 10: the check moves through the audience rows while the card is on screen ---------- */
+  var aud = document.querySelector('.aud');
+  if (aud && motion && 'IntersectionObserver' in window) {
+    var audRows = [].slice.call(aud.querySelectorAll('.aud-row')), audTimer = 0;
+    var audStep = function () {
+      var at = audRows.findIndex(function (r) { return r.classList.contains('on'); });
+      audRows.forEach(function (r, i) { r.classList.toggle('on', i === (at + 1) % audRows.length); });
+    };
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && !audTimer) audTimer = setInterval(audStep, 2000);
+        else if (!en.isIntersecting && audTimer) { clearInterval(audTimer); audTimer = 0; }
+      });
+    }).observe(aud);
+  }
+
+  /* ---------- Item 14: anchors land with the section's heading just below the floating dock ----------
+     The glide itself is CSS (html.motion { scroll-behavior: smooth }), so links, Back and /#x from the legal pages all use the
+     browser's own anchor scrolling. Each section's scroll-margin-top is measured from where its heading really sits, so it
+     follows layout changes at any width (the CSS default of 84 px is the fallback without script). */
+  var anchorEls = [].slice.call(document.querySelectorAll('section[id]:not(#top)'));
+  var absTop = function (el) { var y = 0; while (el) { y += el.offsetTop; el = el.offsetParent; } return y; };
+  var setAnchors = function () {
+    var land = (matchMedia('(min-width: 860px)').matches ? 18 + 56 : 10 + 54) + 28;
+    anchorEls.forEach(function (sec) {
+      var h = sec.querySelector('h1, h2');
+      if (h) sec.style.scrollMarginTop = (land - (absTop(h) - absTop(sec))) + 'px';
+    });
+  };
+  setAnchors();
+  var anchorTimer = 0;
+  window.addEventListener('resize', function () { clearTimeout(anchorTimer); anchorTimer = setTimeout(setAnchors, 150); });
+  window.addEventListener('load', function () {
+    setAnchors();
+    // a page opened at /#faq was placed before the margins existed: place it again, without the glide
+    var target = location.hash.length > 1 && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target && target.matches('section[id]:not(#top)')) target.scrollIntoView({ behavior: 'instant', block: 'start' });
+  });
+
+  /* ---------- Item 14: the menu closes first, then the page glides ---------- */
+  if (header && document.getElementById('menu')) {
+    document.getElementById('menu').addEventListener('click', function (e) {
+      var a = e.target.closest('a'), href = a && a.getAttribute('href');
+      var m = href && href.match(/^\/?#([\w-]+)$/);
+      if (!m || !document.getElementById(m[1]) || !document.body.classList.contains('home') && !document.documentElement.classList.contains('home')) return;
+      e.preventDefault();
+      setTimeout(function () { location.hash = m[1]; }, 220);
+    });
   }
 
   /* ---------- Scroll scenes: --p from 0 to 1 ----------
@@ -137,6 +231,13 @@
     var r = s.el.getBoundingClientRect(), vh = window.innerHeight;
     var mode = s.mode;
     if (s.el.classList.contains('move-scene') && !desktop.matches) mode = 'view-tall';
+    if (mode === 'hero') {
+      // the phone hero: one progress from the top of the page to the end of the pin; s.q is where the pin starts in it
+      // (the phone has risen to the centre), so the rise is p / q
+      var top0 = r.top + window.scrollY, span = top0 + Math.max(0, r.height - vh);
+      s.q = span > 0 ? top0 / span : 0;
+      return span > 0 ? Math.min(1, Math.max(0, window.scrollY / span)) : 1;
+    }
     if (mode === 'pin') {
       var len = r.height - vh;
       return len > 0 ? Math.min(1, Math.max(0, -r.top / len)) : 1;
@@ -145,6 +246,11 @@
       // Move on phones: the map draws while it crosses the screen
       var map = s.el.querySelector('.map-card').getBoundingClientRect();
       return Math.min(1, Math.max(0, (vh * 0.86 - map.top) / (map.height * 0.75 + vh * 0.1)));
+    }
+    if (!desktop.matches && s.el.classList.contains('tile')) {
+      // Your week on phones: a tile's phone rises as the tile enters the page AND as it is swiped into the row
+      var into = Math.min(1, Math.max(0, (window.innerWidth - r.left) / (r.width * 0.75)));
+      return Math.min(into, Math.max(0, (vh - r.top) / (vh * 0.78)));
     }
     return Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.78)));
   }
@@ -176,6 +282,10 @@
           s.cur = next;
           s.el.style.setProperty('--p', next.toFixed(4));
           if (s.el.classList.contains('move-scene')) routeAt(Math.min(1, Math.max(0, (next - 0.08) / 0.72)));
+          if (s.mode === 'hero') {
+            var k = s.q > 0 ? Math.min(1, next / s.q) : 1;
+            s.el.style.setProperty('--re', (k * k * (3 - 2 * k)).toFixed(4));
+          }
         }
       }
       if (again) request();
@@ -194,6 +304,119 @@
     window.addEventListener('resize', request);
     desktop.addEventListener('change', function () { scenes.forEach(function (s) { s.cur = -1; }); request(); });
     request();
+  }
+
+  /* ---------- Your week on phones: dots under the swipeable row (hidden on wide screens, where it is a grid) ---------- */
+  var bento = document.querySelector('.bento');
+  if (bento) {
+    var wTiles = [].slice.call(bento.querySelectorAll('.tile'));
+    var wDots = document.createElement('div');
+    wDots.className = 'week-dots';
+    wDots.setAttribute('role', 'group');
+    wDots.setAttribute('aria-label', 'Tiles');
+    var dotEls = wTiles.map(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Show ' + t.querySelector('h3').textContent.trim());
+      b.addEventListener('click', function () { t.scrollIntoView({ behavior: motion ? 'smooth' : 'auto', block: 'nearest', inline: 'start' }); });
+      wDots.appendChild(b);
+      return b;
+    });
+    bento.parentNode.insertBefore(wDots, bento.nextSibling);
+    var setDot = function () {
+      var step = wTiles[1].getBoundingClientRect().left - wTiles[0].getBoundingClientRect().left;
+      var i = bento.scrollLeft >= bento.scrollWidth - bento.clientWidth - 2 ? wTiles.length - 1 : Math.round(bento.scrollLeft / (step || 1));
+      dotEls.forEach(function (b, k) { b.setAttribute('aria-current', String(k === i)); });
+    };
+    bento.addEventListener('scroll', function () { setDot(); if (motion && request) request(); }, { passive: true });
+    setDot();
+  }
+
+  /* ---------- The phone hero's app (phones): Train, Fuel, Move, Home in a ~12 s loop ----------
+     Plays only while the phone is mostly on screen (it starts over each time it comes back) and never without motion:
+     then the markup's end state, the Home feed, is the still screen. Each step toggles a scene (.on) or a flag class on
+     .app; the CSS does the rest. */
+  var app = document.querySelector('.app');
+  if (app && motion && 'IntersectionObserver' in window) {
+    var aRoute = app.querySelector('.m-route'), aCase = app.querySelector('.m-case');
+    if (route && aRoute) { aRoute.setAttribute('d', route.getAttribute('d')); aCase.setAttribute('d', route.getAttribute('d')); }
+    var scr = {};
+    ['train', 'fuel', 'move', 'home'].forEach(function (n) { scr[n] = app.querySelector('.s-' + n); });
+    var tapEl = app.querySelector('.a-tap'), dockItems = app.querySelectorAll('.a-dock span');
+    var clock = app.querySelector('.w-clock'), rclock = app.querySelector('.w-rclock');
+    var timers = [], playing = false, started = 0, secs = 0;
+    var show = function (n) { for (var k in scr) scr[k].classList.toggle('k-on', k === n); };
+    var snap = function (remove) {  // change flags with no transition (for scenes that are hidden or fading in)
+      app.classList.add('k-snap');
+      remove.forEach(function (f) { app.classList.remove(f); });
+      void app.offsetWidth;
+      app.classList.remove('k-snap');
+    };
+    var tap = function (el) {
+      var a = app.getBoundingClientRect(), r = el.getBoundingClientRect(), k = app.offsetWidth / a.width;  // the phone is scaled
+      tapEl.style.setProperty('--x', (r.left + r.width / 2 - a.left) * k + 'px');
+      tapEl.style.setProperty('--y', (r.top + r.height / 2 - a.top) * k + 'px');
+      tapEl.classList.remove('k-go'); void tapEl.offsetWidth; tapEl.classList.add('k-go');
+    };
+    var tab = function (i) {
+      tap(dockItems[i]);
+      app.classList.add('k-press');
+      setTimeout(function () { app.classList.remove('k-press'); }, 180);
+      app.dataset.tab = i; app.style.setProperty('--tab', i);
+    };
+    var add = function (f) { return function () { app.classList.add(f); }; };
+    var fmt = function (s) { return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); };
+    var aSteps = [
+      [0, function () { snap(['k-tick', 'k-rest', 'k-pr']); show('train'); app.dataset.tab = 1; app.style.setProperty('--tab', 1); secs = 0; }],
+      [300, function () { snap(['k-fill', 'k-draw', 'k-scrolled', 'k-liked']); }],
+      [800, function () { tap(app.querySelector('.w-r3 .ck')); }],
+      [900, add('k-tick')],
+      [1200, add('k-rest')],
+      [1450, add('k-pr')],
+      [3000, function () { app.classList.remove('k-pr'); }],
+      [3400, function () { tab(3); }],
+      [3550, function () { show('fuel'); }],
+      [3700, add('k-fill')],
+      [5700, function () { tab(2); }],
+      [5850, function () { show('move'); }],
+      [5950, add('k-draw')],
+      [8100, function () { tab(0); }],
+      [8250, function () { show('home'); snap(['k-rest']); }],
+      [8800, add('k-scrolled')],
+      [10250, function () { tap(app.querySelector('.h-like')); app.classList.add('k-liked'); }]
+    ];
+    var LOOP = 11900;
+    var tick = function () {  // the workout's clock and the rest timer, once a second
+      if (!playing) return;
+      secs++;
+      clock.textContent = fmt(24 * 60 + 8 + secs);
+      if (app.classList.contains('k-rest')) rclock.textContent = fmt(Math.max(0, 90 - Math.max(0, secs - 1)));
+      else rclock.textContent = '1:30';
+      timers.push(setTimeout(tick, 1000));
+    };
+    var run = function () {
+      aSteps.forEach(function (st) { timers.push(setTimeout(st[1], st[0])); });
+      timers.push(setTimeout(run, LOOP));
+    };
+    var play = function () {
+      if (playing) return;
+      playing = true;
+      app.classList.add('k-live');
+      run();
+      timers.push(setTimeout(tick, 1000));
+    };
+    var stop = function () {
+      playing = false;
+      timers.forEach(clearTimeout); timers = [];
+    };
+    // with motion the phone rises already showing the workout; the loop starts once it is (nearly) settled
+    app.classList.add('k-live');
+    aSteps[0][1](); aSteps[1][1]();
+    var inView = false;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { inView = en.isIntersecting; if (inView && !document.hidden) play(); else stop(); });
+    }, { threshold: 0.85 }).observe(app);
+    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else if (inView) play(); });
   }
 
   /* ---------- Progress: on wide screens a sticky stage shows the active step's chart ---------- */
@@ -218,6 +441,44 @@
       entries.forEach(function (en) { if (en.isIntersecting) setActive(steps.indexOf(en.target)); });
     }, { rootMargin: '-45% 0px -45% 0px' });
     steps.forEach(function (st) { pio.observe(st); });
+  }
+
+  /* ---------- Progress on phones: one snapping row; the snapped card plays its chart, a dot per card shows which ---------- */
+  var row = document.querySelector('.prog-steps');
+  if (row && rowMq.matches && 'IntersectionObserver' in window) {
+    var rowCards = [].slice.call(row.querySelectorAll('.pstep'));
+    var dots = document.createElement('div');
+    dots.className = 'prog-dots';
+    var dotBtns = rowCards.map(function (st, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Show card ' + (i + 1) + ' of ' + rowCards.length + ': ' + st.querySelector('h3').textContent);
+      b.addEventListener('click', function () {
+        row.scrollTo({ left: st.offsetLeft - parseFloat(getComputedStyle(row).paddingLeft), behavior: motion ? 'smooth' : 'auto' });
+      });
+      dots.appendChild(b);
+      return b;
+    });
+    row.parentNode.insertBefore(dots, row.nextSibling);
+    var mark = function (i) { dotBtns.forEach(function (b, k) { if (k === i) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); }); };
+    mark(0);
+    // a card plays while it is the snapped one AND the row is on the page's screen
+    var ratios = rowCards.map(function () { return 0; }), rowOn = false;
+    var sync = function () {
+      rowCards.forEach(function (st, i) {
+        var card = st.querySelector('.pcard');
+        if (ratios[i] >= 0.6) mark(i);
+        if (!motion) return;
+        if (rowOn && ratios[i] >= 0.6) { if (!card.classList.contains('play')) { card.classList.add('in', 'play'); countIn(card); } }
+        else if (!rowOn || ratios[i] < 0.2) card.classList.remove('in', 'play');
+      });
+    };
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { ratios[rowCards.indexOf(en.target)] = en.intersectionRatio; });
+      sync();
+    }, { root: row, threshold: [0, 0.2, 0.6] });
+    rowCards.forEach(function (st) { cio.observe(st); });
+    new IntersectionObserver(function (entries) { rowOn = entries[entries.length - 1].isIntersecting; sync(); }, { threshold: 0.3 }).observe(row);
   }
 
   /* ---------- Contact form. Without JS the form stays hidden and the email address below it is the way in. ---------- */
