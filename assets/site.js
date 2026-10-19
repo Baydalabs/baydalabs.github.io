@@ -233,9 +233,11 @@
     if (s.el.classList.contains('move-scene') && !desktop.matches) mode = 'view-tall';
     if (mode === 'hero') {
       // the phone hero: one progress from the top of the page to the end of the pin; s.q is where the pin starts in it
-      // (the phone has risen to the centre), so the rise is p / q
+      // (the phone has risen to the centre), so the rise is p / q; s.h is two screens later, the end of the app's beats
       var top0 = r.top + window.scrollY, span = top0 + Math.max(0, r.height - vh);
+      var stage = s.el.firstElementChild, sh = stage ? stage.offsetHeight : vh;
       s.q = span > 0 ? top0 / span : 0;
+      s.h = span > 0 ? Math.min(1, (top0 + 2 * sh) / span) : 1;
       return span > 0 ? Math.min(1, Math.max(0, window.scrollY / span)) : 1;
     }
     if (mode === 'pin') {
@@ -248,9 +250,13 @@
       return Math.min(1, Math.max(0, (vh * 0.86 - map.top) / (map.height * 0.75 + vh * 0.1)));
     }
     if (!desktop.matches && s.el.classList.contains('tile')) {
-      // Your week on phones: a tile's phone rises as the tile enters the page AND as it is swiped into the row
-      var into = Math.min(1, Math.max(0, (window.innerWidth - r.left) / (r.width * 0.75)));
-      return Math.min(into, Math.max(0, (vh - r.top) / (vh * 0.78)));
+      // Your week on phones: a tile's phone rises as the tile enters the page AND as it is swiped into the row. The
+      // swipe part runs from the tile's left edge at the screen's right edge (0) to the tile snapped in place (1), so the
+      // phone lands exactly as the tile snaps; the CSS eases it (smoothstep). The vertical part takes a whole screen of
+      // scroll, slower than on wide screens, to match.
+      var bx = s.el.parentNode.getBoundingClientRect().left + (parseFloat(getComputedStyle(s.el.parentNode).scrollPaddingLeft) || 0);
+      var into = Math.min(1, Math.max(0, (window.innerWidth - r.left) / Math.max(1, window.innerWidth - bx)));
+      return Math.min(into, Math.max(0, (vh - r.top) / vh));
     }
     return Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.78)));
   }
@@ -285,6 +291,7 @@
           if (s.mode === 'hero') {
             var k = s.q > 0 ? Math.min(1, next / s.q) : 1;
             s.el.style.setProperty('--re', (k * k * (3 - 2 * k)).toFixed(4));
+            if (appAt && !desktop.matches) appAt(s.h > s.q ? Math.min(1, Math.max(0, (next - s.q) / (s.h - s.q))) : 1);
           }
         }
       }
@@ -332,92 +339,91 @@
     setDot();
   }
 
-  /* ---------- The phone hero's app (phones): Train, Fuel, Move, Home in a ~12 s loop ----------
-     Plays only while the phone is mostly on screen (it starts over each time it comes back) and never without motion:
-     then the markup's end state, the Home feed, is the still screen. Each step toggles a scene (.on) or a flag class on
-     .app; the CSS does the rest. */
+  /* ---------- The phone hero's app (phones): driven by the scroll, not a timer (19 Oct 2026, round 2) ----------
+     While the phone is pinned, b runs 0..1 over two screens of scroll, half a screen per beat:
+       0   .. .25  Home: the feed scrolls to Max's post, the heart turns red, 4 likes become 5
+       .25 .. .50  a tap on Fuel in the dock: the screen changes, the rings fill
+       .50 .. .75  a tap on Train: the workout, the third set ticks green, the rest timer and the record pill land
+       .75 .. 1    a tap on Move: the run, the map settles and the route draws
+     Every value is a function of b alone (custom properties on .app, each screen's opacity), so scrolling back rewinds
+     and nothing moves once the scroll stops. The only timed thing is the tap ripple, fired as b crosses a tap. Without
+     motion (or without this script) the markup's classes give the still Home feed on Max's post. */
+  var appAt = null;
   var app = document.querySelector('.app');
-  if (app && motion && 'IntersectionObserver' in window) {
+  if (app && motion) {
     var aRoute = app.querySelector('.m-route'), aCase = app.querySelector('.m-case');
     if (route && aRoute) { aRoute.setAttribute('d', route.getAttribute('d')); aCase.setAttribute('d', route.getAttribute('d')); }
-    var scr = {};
-    ['train', 'fuel', 'move', 'home'].forEach(function (n) { scr[n] = app.querySelector('.s-' + n); });
+    var scrs = ['home', 'fuel', 'train', 'move'].map(function (n) { return app.querySelector('.s-' + n); });
+    var TABS = [0, 3, 1, 2];  // the dock index of each beat's screen: Home, Fuel, Train, Move
     var tapEl = app.querySelector('.a-tap'), dockItems = app.querySelectorAll('.a-dock span');
+    var likeEl = app.querySelector('.h-max .h-like'), tickEl = app.querySelector('.w-r3 .ck');
     var clock = app.querySelector('.w-clock'), rclock = app.querySelector('.w-rclock');
-    var timers = [], playing = false, started = 0, secs = 0;
-    var show = function (n) { for (var k in scr) scr[k].classList.toggle('k-on', k === n); };
-    var snap = function (remove) {  // change flags with no transition (for scenes that are hidden or fading in)
-      app.classList.add('k-snap');
-      remove.forEach(function (f) { app.classList.remove(f); });
-      void app.offsetWidth;
-      app.classList.remove('k-snap');
-    };
+    var clamp = function (x) { return x < 0 ? 0 : x > 1 ? 1 : x; };
+    var seg = function (b, a, c) { return clamp((b - a) / (c - a)); };
+    var ease = function (t) { return t * t * (3 - 2 * t); };
+    var out = function (t) { return 1 - (1 - t) * (1 - t) * (1 - t); };
+    var fmt = function (s) { return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); };
     var tap = function (el) {
       var a = app.getBoundingClientRect(), r = el.getBoundingClientRect(), k = app.offsetWidth / a.width;  // the phone is scaled
       tapEl.style.setProperty('--x', (r.left + r.width / 2 - a.left) * k + 'px');
       tapEl.style.setProperty('--y', (r.top + r.height / 2 - a.top) * k + 'px');
       tapEl.classList.remove('k-go'); void tapEl.offsetWidth; tapEl.classList.add('k-go');
     };
-    var tab = function (i) {
-      tap(dockItems[i]);
-      app.classList.add('k-press');
-      setTimeout(function () { app.classList.remove('k-press'); }, 180);
-      app.dataset.tab = i; app.style.setProperty('--tab', i);
+    // each change of screen: the dock tap at c[0], the lens slides to the new tab, the new screen fades in c[1]..c[2]
+    var CUTS = [[0.255, 0.27, 0.30], [0.505, 0.52, 0.55], [0.755, 0.77, 0.80]];
+    var TAPS = [0.19, 0.585].concat(CUTS.map(function (c) { return c[0]; }));  // the like, the set's tick, the dock taps
+    var last = -1;
+    var set = function (n, v) { app.style.setProperty(n, v.toFixed(4)); };
+    appAt = function (b) {
+      if (b === last) return;
+      if (last >= 0) TAPS.forEach(function (t, i) {
+        if ((last < t) !== (b < t)) tap(i === 0 ? likeEl : i === 1 ? tickEl : dockItems[TABS[i - 1]]);
+      });
+      last = b;
+      // screens: each one fades in over the one before it, which then goes
+      scrs.forEach(function (el, k) {
+        var o = k === 0 ? 1 : ease(seg(b, CUTS[k - 1][1], CUTS[k - 1][2]));
+        if (k < 3 && seg(b, CUTS[k][1], CUTS[k][2]) >= 1) o = 0;
+        el.style.opacity = o.toFixed(3);
+        el.style.visibility = o > 0 ? 'visible' : 'hidden';
+        el.style.zIndex = k + 1;
+      });
+      // the dock: the lens slides from tab to tab and swells under the finger while it does
+      var tabPos = 0, press = 1;
+      CUTS.forEach(function (c, k) {
+        var m = seg(b, c[0], c[1] + 0.012);
+        tabPos += (TABS[k + 1] - TABS[k]) * ease(m);
+        if (m > 0 && m < 1) press = 1 + 0.12 * Math.sin(m * Math.PI);
+      });
+      set('--tab', tabPos); set('--press', press);
+      var active = String(Math.round(tabPos));
+      if (app.dataset.tab !== active) app.dataset.tab = active;
+      // 1. Home: the feed scrolls to Max's post, then the like
+      set('--fs', ease(seg(b, 0.02, 0.165)));
+      var lk = seg(b, 0.19, 0.215);
+      set('--lk', Math.min(1, lk * 3)); set('--lks', 0.5 + 0.5 * lk + 0.3 * Math.sin(lk * Math.PI));
+      app.classList.toggle('k-liked', b >= 0.19);
+      // 2. Fuel: the big ring, then the three macros a little apart
+      set('--f0', out(seg(b, 0.29, 0.40)));
+      set('--f1', out(seg(b, 0.31, 0.42))); set('--f2', out(seg(b, 0.33, 0.44))); set('--f3', out(seg(b, 0.35, 0.46)));
+      // 3. Train: the third set ticks, the rest timer comes up, the record pill lands; the clocks follow the scroll
+      app.classList.toggle('k-tick', b >= 0.585);
+      set('--tks', 1 + 0.22 * Math.sin(seg(b, 0.585, 0.605) * Math.PI));
+      set('--rest', out(seg(b, 0.6, 0.63)));
+      set('--rb', 1 - 0.1 * seg(b, 0.6, 0.75));
+      set('--pr', out(seg(b, 0.635, 0.67)));
+      clock.textContent = fmt(24 * 60 + 8 + Math.round(seg(b, 0.5, 0.75) * 14));
+      rclock.textContent = fmt(90 - Math.round(seg(b, 0.6, 0.75) * 9));
+      // 4. Move: the map settles and the sheet comes up, then the route draws
+      set('--map', out(seg(b, 0.79, 0.86)));
+      set('--dr', ease(seg(b, 0.82, 0.985)));
     };
-    var add = function (f) { return function () { app.classList.add(f); }; };
-    var fmt = function (s) { return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); };
-    var aSteps = [
-      [0, function () { snap(['k-tick', 'k-rest', 'k-pr']); show('train'); app.dataset.tab = 1; app.style.setProperty('--tab', 1); secs = 0; }],
-      [300, function () { snap(['k-fill', 'k-draw', 'k-scrolled', 'k-liked']); }],
-      [800, function () { tap(app.querySelector('.w-r3 .ck')); }],
-      [900, add('k-tick')],
-      [1200, add('k-rest')],
-      [1450, add('k-pr')],
-      [3000, function () { app.classList.remove('k-pr'); }],
-      [3400, function () { tab(3); }],
-      [3550, function () { show('fuel'); }],
-      [3700, add('k-fill')],
-      [5700, function () { tab(2); }],
-      [5850, function () { show('move'); }],
-      [5950, add('k-draw')],
-      [8100, function () { tab(0); }],
-      [8250, function () { show('home'); snap(['k-rest']); }],
-      [8800, add('k-scrolled')],
-      [10250, function () { tap(app.querySelector('.h-like')); app.classList.add('k-liked'); }]
-    ];
-    var LOOP = 11900;
-    var tick = function () {  // the workout's clock and the rest timer, once a second
-      if (!playing) return;
-      secs++;
-      clock.textContent = fmt(24 * 60 + 8 + secs);
-      if (app.classList.contains('k-rest')) rclock.textContent = fmt(Math.max(0, 90 - Math.max(0, secs - 1)));
-      else rclock.textContent = '1:30';
-      timers.push(setTimeout(tick, 1000));
-    };
-    var run = function () {
-      aSteps.forEach(function (st) { timers.push(setTimeout(st[1], st[0])); });
-      timers.push(setTimeout(run, LOOP));
-    };
-    var play = function () {
-      if (playing) return;
-      playing = true;
-      app.classList.add('k-live');
-      run();
-      timers.push(setTimeout(tick, 1000));
-    };
-    var stop = function () {
-      playing = false;
-      timers.forEach(clearTimeout); timers = [];
-    };
-    // with motion the phone rises already showing the workout; the loop starts once it is (nearly) settled
+    app.classList.remove('k-tick', 'k-fill', 'k-draw', 'k-scrolled', 'k-liked');
     app.classList.add('k-live');
-    aSteps[0][1](); aSteps[1][1]();
-    var inView = false;
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { inView = en.isIntersecting; if (inView && !document.hidden) play(); else stop(); });
-    }, { threshold: 0.85 }).observe(app);
-    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else if (inView) play(); });
+    appAt(0);
+    if (request) request();
   }
+
 
   /* ---------- Progress: on wide screens a sticky stage shows the active step's chart ---------- */
   var stage = document.querySelector('.prog-stage'), steps = [].slice.call(document.querySelectorAll('.pstep'));
