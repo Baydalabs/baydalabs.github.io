@@ -66,7 +66,7 @@
     <article class="doc doc--legal">
 <h1>Privacy policy</h1>
 
-<p class="doc-meta"><span>Last updated: 18 October 2026</span><span class="sep" aria-hidden="true"> · </span><span>Version 2026-10-18</span></p>
+<p class="doc-meta"><span>Last updated: 1 November 2026</span><span class="sep" aria-hidden="true"> · </span><span>Version 2026-11-01</span></p>
 
 <p>Bayda is a training, running and nutrition tracker for iOS. This policy describes exactly what it stores, where, for how long, and on what legal basis. It is written against the app’s actual database schema rather than from a template. Every category below corresponds to a real table.</p>
 
@@ -186,7 +186,7 @@
 
 <p><strong>A recording log, kept with each run, walk or ride you record.</strong> To find out why a recording missed part of a session, Bayda keeps a short log of how the recording went: how many positions your phone reported, how many were kept and, for the ones discarded, why (too inaccurate, too old, too close to the last one to be movement, or faster than a person moves); every stretch longer than ten seconds with no usable position; when the app went to the background or came back; when location permission changed; when you paused, resumed and stopped; the distance your phone measured, worked out two ways (the way Bayda counts it, and a second way being tested against it); the distance estimated from your steps; the time you spent moving; and how accurate your phone said its positions and speeds were. These figures stay in the log even when a watch’s recording of the same session is the one kept. <strong>It contains no positions and no places</strong>, only times, counts, reasons and those figures. It is saved to your account with the activity, <strong>only you can read it</strong>, it cannot be changed afterwards, and it is deleted with the activity or your account. When you pause a recording, the times of those pauses are also kept <strong>on your phone</strong> for 30 days, so that the heart rate and energy read for the activity can leave the pauses out; they are removed when you sign out.</p>
 
-<p><strong>A background-import log, only while automatic import is on.</strong> When automatic import is switched on, Bayda keeps a short technical record of each time your phone woke it in the background to look for new workouts: when it happened, what woke it, whether your phone was locked, whether you were signed in, and how many workouts it found, uploaded or had to leave for later. <strong>It contains no health measurements, no routes and no workout details</strong>. It is saved to your account so that missed uploads can be found and fixed, <strong>only you can read it</strong>, it cannot be changed afterwards, and it is deleted with your account. If a workout your phone read from Apple Health cannot be uploaded straight away (no connection, for example), it is kept <strong>on your phone</strong> for up to 7 days, with its route and the heart rate and energy measured by the app or watch that recorded it, until it can be sent; it is removed when you sign out or switch automatic import off.</p>
+<p><strong>A background-import log, only while automatic import is on.</strong> When automatic import is switched on, Bayda keeps a short technical record of each time your phone woke it in the background to look for new workouts: when it happened, what woke it, whether your phone was locked, whether you were signed in, how many workouts it found, uploaded or had to leave for later, whether Background App Refresh and Low Power Mode were on (both decide whether your phone lets Bayda run in the background), and, for each route it tried to read from Apple Health, only how many positions came back or which kind of error stopped it. <strong>It contains no health measurements, no positions and no workout details</strong>. It is saved to your account so that missed uploads can be found and fixed, <strong>only you can read it</strong>, it cannot be changed afterwards, and it is deleted with your account. If a workout your phone read from Apple Health cannot be uploaded straight away (no connection, for example), it is kept <strong>on your phone</strong> for up to 7 days, with its route and the heart rate and energy measured by the app or watch that recorded it, until it can be sent; it is removed when you sign out or switch automatic import off.</p>
 
 <h3>Steps and motion, if you allow it</h3>
 
@@ -319,11 +319,13 @@
 
 <p>If you enable them, Bayda sends you <strong>reminders you set yourself</strong>: to weigh in, to log a meal, to train. These are scheduled on your device and their content never leaves it.</p>
 
-<p>Bayda also stores your device’s push token so that the server can notify you when somebody follows you, likes or comments on one of your workouts, tags you on a session, or accepts a tag you added. Those notifications are also kept in your account’s notification list. The notification’s content is generated <strong>on the server at the moment it is sent</strong>; the request that triggers the send carries only an identifier and a timestamp, never your name and never the text of a comment.</p>
+<p>Bayda also stores your device’s push token so that the server can notify you when somebody follows you, likes or comments on one of your workouts or on a session you did together, tags you on a session, accepts a tag you added, or adds a photo to a session you did together. In Settings you can switch off each kind of push notification (likes, comments, follows, tags, session photos); Bayda stores those five switches with your account, only you can read them, and they are deleted with your account. A switch stops the push only: the notification still appears in your notification list. Those notifications are also kept in your account’s notification list. The notification’s content is generated <strong>on the server at the moment it is sent</strong>; the request that triggers the send carries only an identifier and a timestamp, never your name and never the text of a comment.</p>
 
 <h3>Crash and hang reports</h3>
 
 <p>When Bayda crashes, hangs or is stopped for using too much memory, Apple’s diagnostics service (MetricKit) hands the app a report on the next launch, and the app sends it to Bayda’s own database in the EU. A report holds technical data about the fault: which part of the program was running, the app and iOS versions, the kind of device and when it happened. It holds no workouts, food, health values, routes or names. Bayda uses it to find and fix faults, which is its legitimate interest. <strong>No third-party crash service is used</strong>, and nothing is sent to one. Reports are deleted after 90 days.</p>
+
+<p><strong>The app version you last used.</strong> Each time you open Bayda or sign in, your account records the app version and build number, your iOS version and when that was, overwriting the previous record (one record per account). We use it to know which version each account runs, so a fault can be matched to a build and testers can be told when a fix reaches them; this is Bayda’s legitimate interest. It holds nothing else, only you can read it through the app, it is included in your data export, and it is deleted with your account.</p>
 
 <h3>Reports</h3>
 
@@ -379,7 +381,7 @@
 <tr><td><strong>Google</strong></td><td>Only if you sign in with Google</td><td>Your Google account identifier and email</td><td>United States and worldwide</td><td><a href="https://policies.google.com/privacy">policies.google.com/privacy</a></td></tr>
 <tr><td><strong>GIPHY</strong> (Shutterstock)</td><td>When you search for or see a GIF in a comment</td><td>Searches: only the words, sent by Bayda’s server with no IP address or identifier of yours. Showing a GIF: your phone’s IP address, when it loads the GIF from GIPHY</td><td>United States</td><td><a href="https://support.giphy.com/hc/en-us/articles/360032872931-GIPHY-Privacy-Policy">GIPHY’s privacy policy</a></td></tr>
 <tr><td><strong>Open Food Facts</strong> (non-profit association)</td><td>When you search for a food or scan a barcode</td><td>The search words or barcode, your IP address, and the app’s name, version and a contact address (as the User-Agent). Never what you logged. Open Food Facts keeps logs for up to 3 years</td><td>EU (France)</td><td><a href="https://world.openfoodfacts.org/privacy">world.openfoodfacts.org/privacy</a></td></tr>
-<tr><td><strong>GitHub</strong> (Microsoft)</td><td>Checking for a newer build; hosting the website bayda-app.com, with this policy and the support page; storing Bayda’s nightly backups</td><td>The update check and the website: your IP address, nothing about your account. The backups: a file encrypted with a key only the controller holds, which GitHub cannot read</td><td>United States</td><td><a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub’s privacy statement</a></td></tr>
+<tr><td><strong>GitHub</strong> (Microsoft)</td><td>Checking for a newer build; hosting the website bayda-app.com, with this policy and the support page; storing Bayda’s nightly backups when they are switched on (they are paused at the time of this version)</td><td>The update check and the website: your IP address, nothing about your account. The backups, when taken: a file encrypted with a key only the controller holds, which GitHub cannot read</td><td>United States</td><td><a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub’s privacy statement</a></td></tr>
 </tbody>
 </table></div>
 
@@ -425,7 +427,9 @@
 <tr><td>Search records, username look-ups</td><td>2 hours</td></tr>
 <tr><td>GIF search rate-limit records</td><td>1 day</td></tr>
 <tr><td>Food scan counts</td><td>40 days</td></tr>
-<tr><td>Nightly encrypted backups of the database</td><td>30 days. They are encrypted with a key only the controller holds and stored on GitHub, and are used only to recover from a disaster</td></tr>
+<tr><td>Nightly encrypted backups of the database</td><td>Paused at the time of this version, so none are kept. When they are switched on, each is kept 30 days, encrypted with a key only the controller holds, stored on GitHub and used only to recover from a disaster</td></tr>
+<tr><td>The app version you last used</td><td>Until the next time you open the app (it is overwritten), and deleted with your account</td></tr>
+<tr><td>Your push notification switches</td><td>Until you change them, and deleted with your account</td></tr>
 <tr><td>Supabase’s own platform logs, which include IP addresses</td><td>As long as Supabase keeps them under its own policy. Bayda cannot shorten that</td></tr>
 <tr><td>Messages to <a href="mailto:contact@bayda-app.com">contact@bayda-app.com</a> about your rights</td><td>3 years, to show the request was answered</td></tr>
 <tr><td>Other messages, from the contact form on bayda-app.com or by email</td><td>Until the matter is closed, and at most 12 months after your last message</td></tr>
@@ -475,7 +479,7 @@
 <li><strong>Reports about you,</strong> kept for moderation and in case of legal claims. A report somebody else made about your content or your profile is kept so it can still be reviewed. It no longer records whose content it was, but a report about your profile keeps your account identifier and the reporter’s note until 12 months after it is closed.</li>
 <li><strong>@mentions.</strong> If someone wrote your username in a comment, that text stays inside their comment. It is theirs.</li>
 <li><strong>Other people’s phones</strong> may keep a cached copy of your profile until their next refresh.</li>
-<li><strong>Backups.</strong> Nightly encrypted backups taken before the deletion still hold your data until they age out, 30 days after they were made.</li>
+<li><strong>Backups.</strong> Bayda’s nightly backups are paused at the time of this version. When they run, a backup taken before the deletion still holds your data until it ages out, 30 days after it was made.</li>
 <li><strong>Supabase’s platform logs</strong> keep IP addresses for as long as Supabase’s own policy says.</li>
 </ul>
 
