@@ -66,7 +66,7 @@
     <article class="doc doc--legal">
 <h1>Privacy policy</h1>
 
-<p class="doc-meta"><span>Last updated: 1 November 2026</span><span class="sep" aria-hidden="true"> · </span><span>Version 2026-11-01</span></p>
+<p class="doc-meta"><span>Last updated: 5 November 2026</span><span class="sep" aria-hidden="true"> · </span><span>Version 2026-11-05</span></p>
 
 <p>Bayda is a training, running and nutrition tracker for iOS. This policy describes exactly what it stores, where, for how long, and on what legal basis. It is written against the app’s actual database schema rather than from a template. Every category below corresponds to a real table.</p>
 
@@ -90,6 +90,7 @@
 <tr><td>Runs your account: sign-in, your profile, logging your workouts, food and weight, the social features (follow, like, comment, tag, the feed, notifications in the app)</td><td>Contract, <span class="nw">Article 6(1)(b)</span>: this is the service you asked for</td></tr>
 <tr><td>Processes your health data: weight, body fat, food diary, training, height, date of birth, sex, the heart rate read from a Bluetooth heart rate strap, and the heart rate and energy read from Apple Health</td><td>Your explicit consent, <span class="nw">Article 6(1)(a)</span> and <span class="nw">Article 9(2)(a)</span>, given on the consent screen at setup (see <em>Health data</em> below)</td></tr>
 <tr><td>Shows your heart rate, heart-rate zones, power and calories to other people</td><td>Your explicit consent, <span class="nw">Article 6(1)(a)</span> and <span class="nw">Article 9(2)(a)</span>, given with the <em>Share heart rate and calories</em> switch in Settings, or by tapping <em>Show</em> when Bayda asks you once after your first session with heart rate; off unless you choose it</td></tr>
+<tr><td>Receives your new activities from Garmin Connect, if you connect your Garmin account</td><td>Your explicit consent, <span class="nw">Article 6(1)(a)</span> and <span class="nw">Article 9(2)(a)</span>, given by connecting your Garmin account (see <em>Garmin Connect</em> below); you withdraw it by disconnecting</td></tr>
 <tr><td>Estimates a plate of food from a photo (the AI food scan)</td><td>Your consent, <span class="nw">Article 6(1)(a)</span> and <span class="nw">Article 9(2)(a)</span>, asked before the first photo is sent</td></tr>
 <tr><td>Sends push notifications</td><td>Your consent, <span class="nw">Article 6(1)(a)</span>: the notification permission on your phone</td></tr>
 <tr><td>Keeps the service secure and fair: rate limits, reports and moderation, refusing blocked words in comments and names, diagnostic logs and crash reports, the check for a newer build</td><td>Legitimate interests, <span class="nw">Article 6(1)(f)</span>: keeping Bayda safe, working and free of abuse. You can object, see <em>Your rights</em></td></tr>
@@ -283,6 +284,19 @@
 
 <p>What was read is <strong>stored in your account as workouts of your own</strong>, with the dates they happened, and is then treated exactly like a session Bayda recorded itself. An imported session takes your default visibility (<em>Anyone on Bayda</em> unless you have changed it), and an imported route takes your route setting, which is public unless you change it, under all the rules above. Imported sessions sit at their old dates in your history and in the feed, and your followers are not notified of them. If you would rather they were not shared, set <em>Who can see my workouts</em> to <em>Only me</em> before you import. An exercise from a strength app’s file that is not in Bayda’s list is added to your own exercises. Importing a file writes nothing to Apple Health. You can delete an imported session like any other, and deleting your account removes them all.</p>
 
+<h3>Garmin Connect, if you connect it</h3>
+
+<p>Garmin Connect saves your workouts in Apple Health without their route. If you connect your Garmin account in <em>Profile ▸ Settings ▸ Apple Health ▸ Garmin Connect™</em>, Bayda receives your new activities from Garmin directly, so they get their map. Nothing is received until you connect, and activities from before you connected are not included.</p>
+
+<ul>
+<li><strong>Connecting.</strong> You sign in on Garmin’s own page and choose there what to share. Bayda never sees your Garmin password. Garmin gives Bayda’s server an access key for your account and your Garmin user identifier. The keys are kept on Bayda’s server only: never on your phone, never shown to anyone.</li>
+<li><strong>What Garmin sends.</strong> For each new activity you sync with Garmin Connect: a summary (its type, start time, duration, distance, and the model of the device that recorded it, such as "Forerunner 265") and the activity’s file (FIT), which holds its route and the device’s other measurements.</li>
+<li><strong>What Bayda keeps.</strong> The file is stored on Bayda’s server until your phone has read it, and at most 14 days. Your phone reads its start and end, its distance and its route, finds the same activity Garmin Connect saved in Apple Health, and gives that session its route, splits and altitude profile, as when you import a file yourself. Heart rate and the other measurements in the file are not read. The file is then deleted. Bayda keeps the route it made and the device model.</li>
+<li><strong>Who sees it.</strong> The session and its route follow your visibility and route settings described above. Garmin asks that its data be credited, so wherever the session is shown, to you or to others, it carries the device’s name, such as "Garmin Forerunner 265".</li>
+<li><strong>Garmin data is never sold, never used for advertising, and never used to train or improve AI models.</strong> No AI service receives it.</li>
+<li><strong>Disconnecting.</strong> <em>Disconnect</em> on the same page, or removing Bayda in Garmin Connect, ends it: Bayda asks Garmin to end the connection and deletes the keys and any file not yet read. Sessions that already got their route keep it; delete a session to remove it. Deleting your account does all of this too.</li>
+</ul>
+
 <h3>Photos on a workout</h3>
 
 <p>If you add a photo to a workout or a run, it is <strong>uploaded to Bayda’s storage and shown to whoever can see that workout</strong>, which is the same set of people its privacy setting already governs, and no one else. A session set to <em>Only me</em> keeps its photo to you (and to anyone you tagged on it); a <em>Followers</em> session’s photo is visible to followers.</p>
@@ -357,7 +371,7 @@
 
 <h2 id="where-it-is-stored-and-who-receives-it">Where it is stored, and who receives it</h2>
 
-<p>Bayda uses <strong>Supabase</strong> (database, sign-in, file storage and server functions) hosted in the <strong>European Union (AWS eu-west-1, Ireland)</strong>. Bayda’s server functions (the account deletion, the food scan, the GIF search and the push dispatch) are pinned to the same region, so they run in the EU too. Supabase acts as a processor.</p>
+<p>Bayda uses <strong>Supabase</strong> (database, sign-in, file storage and server functions) hosted in the <strong>European Union (AWS eu-west-1, Ireland)</strong>. Bayda’s server functions (the account deletion, the food scan, the GIF search, the push dispatch and the Garmin connection) are pinned to the same region, so they run in the EU too. Supabase acts as a processor.</p>
 
 <p>We are a small team and use a small number of outside services. Some are <strong>processors</strong>: they handle data only on Bayda’s instructions, under a written data processing agreement. The others are <strong>independent companies</strong> whose service your phone or Bayda’s server talks to; for those, their own privacy policy applies.</p>
 
@@ -366,7 +380,7 @@
 <div class="scroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table>
 <thead><tr><th>Service</th><th>What it does for Bayda</th><th>Data it handles</th><th>Where</th><th>Safeguard</th></tr></thead>
 <tbody>
-<tr><td><strong>Supabase, Inc.</strong> (on Amazon Web Services)</td><td>Database, sign-in sessions, file storage, server functions</td><td>Everything stored in your account: profile, training, routes, food diary, weigh-ins, targets, photos, notifications, push tokens</td><td>Stored in the EU (Ireland). Some Supabase support and security staff and subprocessors are in the United States</td><td>Supabase’s Data Processing Addendum, which includes the EU Standard Contractual Clauses (<a href="https://supabase.com/legal/dpa">supabase.com/legal/dpa</a>)</td></tr>
+<tr><td><strong>Supabase, Inc.</strong> (on Amazon Web Services)</td><td>Database, sign-in sessions, file storage, server functions</td><td>Everything stored in your account: profile, training, routes, food diary, weigh-ins, targets, photos, notifications, push tokens, and, if you connect Garmin Connect, your Garmin keys and the activity files Garmin sends until they are read</td><td>Stored in the EU (Ireland). Some Supabase support and security staff and subprocessors are in the United States</td><td>Supabase’s Data Processing Addendum, which includes the EU Standard Contractual Clauses (<a href="https://supabase.com/legal/dpa">supabase.com/legal/dpa</a>)</td></tr>
 <tr><td><strong>Combell NV</strong></td><td>Hosts the mailbox <a href="mailto:contact@bayda-app.com">contact@bayda-app.com</a>, where messages from the contact form and email to Bayda arrive</td><td>Your name, email address and what you wrote</td><td>EU (Belgium)</td><td>Combell’s data processing terms, part of its general terms of service</td></tr>
 <tr><td><strong>Anthropic</strong> (makes the Claude AI models)</td><td>Recognises foods and estimates amounts when you use the AI food scan</td><td>The one photo you scan, made smaller and stripped of location, camera and time, and your phone’s language. No name, account or identifier</td><td>United States</td><td>Anthropic’s Data Processing Addendum with the Standard Contractual Clauses, Modules 2 and 3 (<a href="https://www.anthropic.com/legal/data-processing-addendum">anthropic.com/legal/data-processing-addendum</a>). Anthropic does not train on it and deletes it within 30 days. A photo flagged for misuse may be kept up to 2 years, and trust and safety scores up to 7 years</td></tr>
 </tbody>
@@ -378,6 +392,7 @@
 <thead><tr><th>Service</th><th>When</th><th>What it receives</th><th>Where</th><th>Its policy</th></tr></thead>
 <tbody>
 <tr><td><strong>Apple</strong></td><td>Sign in with Apple, push notifications, Apple Health (on your phone only), map tiles</td><td>Sign-in: your Apple identifier, and your name and email if you share them. Push: your device’s push token and the notification text (a name and "liked your run", never comment text). Maps: the area being drawn</td><td>United States and worldwide</td><td><a href="https://www.apple.com/legal/privacy/">apple.com/legal/privacy</a></td></tr>
+<tr><td><strong>Garmin</strong></td><td>Only if you connect Garmin Connect</td><td>Garmin sends Bayda your new activities (see <em>Garmin Connect</em> above). Bayda sends Garmin only the requests to fetch them, and to end the connection when you disconnect or delete your account</td><td>United States and worldwide</td><td><a href="https://www.garmin.com/privacy/connect/">garmin.com/privacy/connect</a></td></tr>
 <tr><td><strong>Google</strong></td><td>Only if you sign in with Google</td><td>Your Google account identifier and email</td><td>United States and worldwide</td><td><a href="https://policies.google.com/privacy">policies.google.com/privacy</a></td></tr>
 <tr><td><strong>GIPHY</strong> (Shutterstock)</td><td>When you search for or see a GIF in a comment</td><td>Searches: only the words, sent by Bayda’s server with no IP address or identifier of yours. Showing a GIF: your phone’s IP address, when it loads the GIF from GIPHY</td><td>United States</td><td><a href="https://support.giphy.com/hc/en-us/articles/360032872931-GIPHY-Privacy-Policy">GIPHY’s privacy policy</a></td></tr>
 <tr><td><strong>Open Food Facts</strong> (non-profit association)</td><td>When you search for a food or scan a barcode</td><td>The search words or barcode, your IP address, and the app’s name, version and a contact address (as the User-Agent). Never what you logged. Open Food Facts keeps logs for up to 3 years</td><td>EU (France)</td><td><a href="https://world.openfoodfacts.org/privacy">world.openfoodfacts.org/privacy</a></td></tr>
@@ -407,7 +422,7 @@
 <li><strong>Apple, Google, GIPHY and GitHub.</strong> These companies operate worldwide.</li>
 </ul>
 
-<p>For the processors (Supabase and Anthropic) the transfer is covered by the European Commission’s <strong>Standard Contractual Clauses</strong>, which are part of their data processing agreements. Apple, Google, GIPHY and GitHub are responsible for their own transfers; where a US company is certified under the EU-US Data Privacy Framework, that adequacy decision applies as well. You can ask for a copy of the safeguards at <a href="mailto:contact@bayda-app.com">contact@bayda-app.com</a>.</p>
+<p>For the processors (Supabase and Anthropic) the transfer is covered by the European Commission’s <strong>Standard Contractual Clauses</strong>, which are part of their data processing agreements. Apple, Google, Garmin, GIPHY and GitHub are responsible for their own transfers; where a US company is certified under the EU-US Data Privacy Framework, that adequacy decision applies as well. You can ask for a copy of the safeguards at <a href="mailto:contact@bayda-app.com">contact@bayda-app.com</a>.</p>
 
 <hr>
 
@@ -427,6 +442,8 @@
 <tr><td>Search records, username look-ups</td><td>2 hours</td></tr>
 <tr><td>GIF search rate-limit records</td><td>1 day</td></tr>
 <tr><td>Food scan counts</td><td>40 days</td></tr>
+<tr><td>Your Garmin keys</td><td>While Garmin Connect is connected</td></tr>
+<tr><td>An activity file from Garmin</td><td>Until your phone has read it, and at most 14 days</td></tr>
 <tr><td>Nightly encrypted backups of the database</td><td>Paused at the time of this version, so none are kept. When they are switched on, each is kept 30 days, encrypted with a key only the controller holds, stored on GitHub and used only to recover from a disaster</td></tr>
 <tr><td>The app version you last used</td><td>Until the next time you open the app (it is overwritten), and deleted with your account</td></tr>
 <tr><td>Your push notification switches</td><td>Until you change them, and deleted with your account</td></tr>
@@ -466,7 +483,7 @@
 
 <h2 id="deleting-your-account">Deleting your account</h2>
 
-<p>Deletion removes your profile, workouts, sets, routes (and the copies other people could see), routines, interval workouts, custom exercises, food log, weight history, recipes, targets and settings (including height, date of birth, sex and goals), the history of your targets and goals, the days you marked complete, notifications and push tokens, tags you added or were asked about, comments, likes, follows, blocks, dismissed suggestions, recording logs and background-import logs, history you imported from a file, your food-scan counts and consent record, your health-data consent record, and the reports you sent. The server function that does this runs in the EU (Ireland).</p>
+<p>Deletion removes your profile, workouts, sets, routes (and the copies other people could see), routines, interval workouts, custom exercises, food log, weight history, recipes, targets and settings (including height, date of birth, sex and goals), the history of your targets and goals, the days you marked complete, notifications and push tokens, tags you added or were asked about, comments, likes, follows, blocks, dismissed suggestions, recording logs and background-import logs, history you imported from a file, your Garmin connection, keys and unread activity files (Bayda first asks Garmin to end the connection), your food-scan counts and consent record, your health-data consent record, and the reports you sent. The server function that does this runs in the EU (Ireland).</p>
 
 <p><strong>Stored files are deleted too, not just the records pointing at them.</strong> Your profile picture and any workout, exercise and comment photos are removed from storage before any row is deleted, and the deletion is refused if any file survives. Photos other people attached to comments on your workouts go with those comments and are removed from storage straight afterwards. Food-scan photos are kept only on your phone, so they are not in Bayda’s storage to delete; deleting the account on that phone clears them there, along with the other files the app keeps for your account.</p>
 
