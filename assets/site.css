@@ -1528,3 +1528,9 @@ html.motion { scroll-behavior: smooth; }
      shadow, and take the same amount back with negative margins so the page layout does not move */
   .prog-steps { padding-block: 8px 36px; margin-block: -8px -36px; }
 }
+
+/* 12 Nov 2026: the two people photos (runner, man at the bench), side by side, stacked on a phone */
+.duo { padding-block: 24px 8px; }
+.duo-grid { display: grid; gap: 16px; }
+.duo-photo { aspect-ratio: 4 / 5; border-radius: var(--r-lg); }
+@media (min-width: 860px) { .duo-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 960px; margin-inline: auto; } }
