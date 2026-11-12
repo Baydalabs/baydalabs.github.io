@@ -1008,24 +1008,16 @@ a.badge:hover { opacity: .88; text-decoration: none; }
 }
 
 
-/* ---- Friends on phones (site-fixes item 7): text first, a shorter photo reframed on the lift, the post card (two exercises,
-   "+3 more", then the like row: the same real crop, cut in two) overlapping it further, a "Trained with Max" chip on the photo.
-   Wide screens keep the full post and no chip. */
-.post-short, .tag-chip { display: none; }
+/* ---- Friends on phones (site-fixes item 7): text first, a shorter photo reframed on the lift, the post card overlapping it
+   further, a "Trained with Max" chip on the photo. Wide screens keep no chip. The post is the whole crop everywhere since
+   12 Nov 2026: it has two exercises now, so the phone-only "+3 more" cut is gone. */
+.tag-chip { display: none; }
 @media (max-width: 859.98px) {
   .friends-card { order: 1; margin-top: 0; }
   .friends-photo { order: 2; margin-top: 28px; aspect-ratio: 4 / 3; }
   .friends-photo img { object-position: 22% 50%; }
   .friends { padding-bottom: 40px; }
   .post-card { order: 3; margin-top: -13%; width: min(90%, 360px); }
-  .post-full { display: none; }
-  .post-short { display: block; }
-  .post-short picture { display: block; }
-  .ps-top, .ps-foot { overflow: hidden; }
-  .ps-top { aspect-ratio: 660 / 448; }
-  .ps-foot { aspect-ratio: 660 / 116; }
-  .ps-foot img { margin-top: -113.33%; }
-  .ps-more { padding: 2px 0 14px 18.3%; font-size: 11px; line-height: 1.2; font-weight: 500; color: #707076; }
   .tag-chip { position: absolute; z-index: 3; left: 12px; top: 12px; display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 5px;
     border-radius: 999px; background: #fff; box-shadow: var(--sh-float); color: var(--ink); font-size: 13px; font-weight: 600; line-height: 1.2; }
   .tc-faces { display: flex; }
