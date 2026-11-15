@@ -878,6 +878,9 @@ a.badge:hover { opacity: .88; text-decoration: none; }
 @media (min-width: 860px) { .health-mark img { height: 50px; } }
 .health-copy h2 { margin-top: 16px; max-width: 13em; }
 .health-copy .lead { margin-top: 14px; max-width: 32em; }
+/* Garmin's "works with" badge, unaltered; Garmin's brand guide sets 88px as its minimum height (15 Nov 2026). */
+.health-garmin { margin-top: 18px; line-height: 0; max-width: 100%; }
+.health-garmin img { height: 88px; width: auto; max-width: 100%; object-fit: contain; }
 .health-phones { position: relative; z-index: 3; display: flex; justify-content: center; align-items: flex-start; gap: clamp(10px, 2vw, 32px); margin-top: -34vh; }
 .hph { --o: 0px; transform: translateY(var(--o)); }
 .hph .iphone { --w: min(30vw, 250px); }
