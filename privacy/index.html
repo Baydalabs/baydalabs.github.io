@@ -66,7 +66,7 @@
     <article class="doc doc--legal">
 <h1>Privacy policy</h1>
 
-<p class="doc-meta"><span>Last updated: 19 November 2026</span><span class="sep" aria-hidden="true"> · </span><span>Version 2026-11-05</span></p>
+<p class="doc-meta"><span>Last updated: 23 November 2026</span><span class="sep" aria-hidden="true"> · </span><span>Version 2026-11-05</span></p>
 
 <p>Bayda is a training, running and nutrition tracker for iOS. This policy describes exactly what it stores, where, for how long, and on what legal basis. It is written against the app’s actual database schema rather than from a template. Every category below corresponds to a real table.</p>
 
@@ -460,7 +460,7 @@
 <tr><td>Your push notification switches</td><td>Until you change them, and deleted with your account</td></tr>
 <tr><td>Your Bayda Pro status</td><td>While the account exists, and deleted with it</td></tr>
 <tr><td>Records of the purchase updates RevenueCat sends (their identifier and type, without your account)</td><td>About 90 days (removed with the next update after that)</td></tr>
-<tr><td>Your purchase record at RevenueCat</td><td>Until RevenueCat deletes it: after deleting your account, write to <a href="mailto:contact@bayda-app.com">contact@bayda-app.com</a> and we will have RevenueCat delete it</td></tr>
+<tr><td>Your purchase record at RevenueCat</td><td>Until your account is deleted: deleting your account asks RevenueCat to delete it. If that request fails, write to <a href="mailto:contact@bayda-app.com">contact@bayda-app.com</a> and we will have it deleted</td></tr>
 <tr><td>Markers that keep a replaced Apple Health copy from being imported again</td><td>While the account exists, and deleted with it</td></tr>
 <tr><td>Supabase’s own platform logs, which include IP addresses</td><td>As long as Supabase keeps them under its own policy. Bayda cannot shorten that</td></tr>
 <tr><td>Messages to <a href="mailto:contact@bayda-app.com">contact@bayda-app.com</a> about your rights</td><td>3 years, to show the request was answered</td></tr>
@@ -498,7 +498,7 @@
 
 <h2 id="deleting-your-account">Deleting your account</h2>
 
-<p>Deletion removes your profile, workouts, sets, routes (and the copies other people could see), routines, interval workouts, custom exercises, food log, weight history, recipes, targets and settings (including height, date of birth, sex and goals), the history of your targets and goals, the days you marked complete, notifications and push tokens, tags you added or were asked about, comments, likes, follows, blocks, dismissed suggestions, recording logs and background-import logs, history you imported from a file, your Garmin connection, keys and unread activity files (Bayda first asks Garmin to end the connection), your food-scan counts and consent record, your health-data consent record, your Bayda Pro records, the markers that keep a replaced Apple Health copy from coming back, and the reports you sent. Deleting your account does not cancel a Bayda Pro subscription: see <em>Bayda Pro and purchases</em>. The server function that does this runs in the EU (Ireland).</p>
+<p>Deletion removes your profile, workouts, sets, routes (and the copies other people could see), routines, interval workouts, custom exercises, food log, weight history, recipes, targets and settings (including height, date of birth, sex and goals), the history of your targets and goals, the days you marked complete, notifications and push tokens, tags you added or were asked about, comments, likes, follows, blocks, dismissed suggestions, recording logs and background-import logs, history you imported from a file, your Garmin connection, keys and unread activity files (Bayda first asks Garmin to end the connection), your food-scan counts and consent record, your health-data consent record, your Bayda Pro records (and, from our server’s request, your RevenueCat customer record), the markers that keep a replaced Apple Health copy from coming back, and the reports you sent. Deleting your account does not cancel a Bayda Pro subscription: see <em>Bayda Pro and purchases</em>. The server function that does this runs in the EU (Ireland).</p>
 
 <p><strong>Stored files are deleted too, not just the records pointing at them.</strong> Your profile picture and any workout, exercise and comment photos are removed from storage before any row is deleted, and the deletion is refused if any file survives. Photos other people attached to comments on your workouts go with those comments and are removed from storage straight afterwards. Food-scan photos are kept only on your phone, so they are not in Bayda’s storage to delete; deleting the account on that phone clears them there, along with the other files the app keeps for your account.</p>
 
@@ -525,11 +525,11 @@
 
 <p><strong>What we store.</strong> For each Bayda Pro product on your account, our database (Supabase, in the EU) stores: whether it is active, when it expires, the product, whether it is a free trial, an introductory offer or a normal period, the store, whether it was a test purchase or a real one, whether it will renew, whether there is a billing problem, and the identifier, type and time of the last update RevenueCat sent about it. Only you can read these records. They are included in <em>Export my data</em> and deleted with your account. To avoid handling the same update twice, our server also keeps the identifier and type of each Bayda Pro update RevenueCat sends, without your account, for 90 days; older ones are removed with the next update.</p>
 
-<p><strong>Who can see that you have Pro.</strong> A <strong>PRO badge</strong> shows next to your name on your profile and on your sessions in the feed. Only people who can see your profile see it, and they see only that you have Pro, never which plan, the price or when it ends.</p>
+<p><strong>Who can see that you have Pro.</strong> A <strong>PRO badge</strong> shows next to your name on your profile and on the page of your sessions. Only people who can see your profile see it, and they see only that you have Pro, never which plan, the price or when it ends.</p>
 
 <p><strong>Restoring on another account.</strong> If you restore a purchase while signed in to a different Bayda account with the same Apple ID, RevenueCat moves Pro to that account, and our records move with it.</p>
 
-<p><strong>Deleting your account does not cancel a subscription.</strong> Cancel it in your iPhone’s Settings (your name, then <em>Subscriptions</em>). Deleting your Bayda account removes your Pro records from our database. RevenueCat still holds the purchase record under your old account identifier, which no longer leads to anything in your Bayda account; write to <a href="mailto:contact@bayda-app.com">contact@bayda-app.com</a> and we will have RevenueCat delete it.</p>
+<p><strong>Deleting your account does not cancel a subscription.</strong> Cancel it in your iPhone’s Settings (your name, then <em>Subscriptions</em>). Deleting your Bayda account removes your Pro records from our database, and our server also asks RevenueCat to delete your customer record there. If that request fails, the account is still deleted and RevenueCat’s record, which no longer leads to anything in your Bayda account, stays until you write to <a href="mailto:contact@bayda-app.com">contact@bayda-app.com</a> and we have it deleted.</p>
 
 <h2 id="children">Children</h2>
 
