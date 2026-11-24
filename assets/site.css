@@ -873,14 +873,13 @@ a.badge:hover { opacity: .88; text-decoration: none; }
 .health-photo::before { content: ""; position: absolute; z-index: 1; left: 0; right: 0; top: 0; height: 52%; background: linear-gradient(var(--hbg) 0%, rgba(242, 242, 245, .82) 40%, rgba(242, 242, 245, 0) 100%); }
 .health-copy { position: relative; z-index: 2; padding: var(--sec) var(--gutter) 0; margin-bottom: -26vh; text-align: center; display: flex; flex-direction: column; align-items: center; }
 /* Apple's official "Works with Apple Health" badge, unmodified (black version, on the light grey: the licence forbids changes) */
-.health-mark { line-height: 0; }
-.health-mark img { height: 44px; width: auto; }
-@media (min-width: 860px) { .health-mark img { height: 50px; } }
+/* Apple Health and Garmin Connect side by side, the same height (David, 24 Nov 2026); each badge unaltered. On a phone the
+   pair shrinks together to fit the line (8.02 = the two badges' widths over their height). */
+.health-marks { display: flex; align-items: center; justify-content: center; gap: 12px; line-height: 0; max-width: 100%; }
+.health-marks img { height: min(52px, calc((100vw - 2 * var(--gutter) - 12px) / 8.02)); width: auto; }
+@media (min-width: 860px) { .health-marks { gap: 16px; } .health-marks img { height: 60px; } }
 .health-copy h2 { margin-top: 16px; max-width: 13em; }
 .health-copy .lead { margin-top: 14px; max-width: 32em; }
-/* Garmin's "works with" badge, unaltered; Garmin's brand guide sets 88px as its minimum height (15 Nov 2026). */
-.health-garmin { margin-top: 18px; line-height: 0; max-width: 100%; }
-.health-garmin img { height: 88px; width: auto; max-width: 100%; object-fit: contain; }
 .health-phones { position: relative; z-index: 3; display: flex; justify-content: center; align-items: flex-start; gap: clamp(10px, 2vw, 32px); margin-top: -34vh; }
 .hph { --o: 0px; transform: translateY(var(--o)); }
 .hph .iphone { --w: min(30vw, 250px); }
